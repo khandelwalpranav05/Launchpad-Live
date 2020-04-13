@@ -6,11 +6,14 @@ int main() {
 
 	int n = 5;
 
-	for (int row = 1; row <= n; row++) {
+	int row;
+	int col;
+
+	for (row = 1; row <= n; row++) {
 
 		// cout << "I'm at " << row << " row" << endl;
 
-		for (int col = 1; col <= row; col++) {
+		for (col = 1; col <= row; col++) {
 			cout << "* ";
 		}
 		cout << endl;
