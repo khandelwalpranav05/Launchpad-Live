@@ -2,46 +2,48 @@
 
 using namespace std;
 
-int factorial(float x) {
+int factorial(int x) {
+	cout << "Function is called" << endl;
 	int ans = 1;
 
 	for (int i = 1; i <= x; ++i) {
 		ans = ans * i;
 	}
 
+	// cout << ans << endl;
+
 	return ans;
 }
 
 int main() {
 
+	// cout << n << endl;
+
 	int n = 5;
 	int r = 2;
 
-	// int nfact = 1;
+	// Calling a function (in case of void function only call this)
+	factorial(n);
 
-	// for (int i = 1; i <= n; i++) {
-	// 	nfact = nfact * i;
-	// }
+	// Calling a function and then printing the returned value
+	cout << factorial(n) << endl; // 120
 
-	// int rfact = 1;
+	// Calling a function and then storing the returned value
+	int getValue = factorial(n);
+	cout << "Get value " << getValue << endl;
 
-	// for (int i = 1; i <= r; i++) {
-	// 	rfact = rfact * i;
-	// }
 
-	// int nrfact = 1;
+	// cout << factorial(r) << endl; // 2
+	// cout << factorial(n - r) << endl; // 6
 
-	// for (int i = 1; i <= (n - r); i++) {
-	// 	nrfact = nrfact * i;
-	//
 
-	int nfact = factorial(n);
-	int rfact = factorial(r);
-	int nrfact = factorial(n - r);
+	// int nfact = factorial(n);
+	// int rfact = factorial(r);
+	// int nrfact = factorial(n - r);
 
-	cout << "nfact " << nfact << endl;
-	cout << "rfact " << rfact << endl;
-	cout << "nrfact " << nrfact << endl;
+	// cout << "nfact " << nfact << endl;
+	// cout << "rfact " << rfact << endl;
+	// cout << "nrfact " << nrfact << endl;
 
 
 	// int result = nfact / (rfact * nrfact);
@@ -50,4 +52,6 @@ int main() {
 
 	return 0;
 }
+
+
 
