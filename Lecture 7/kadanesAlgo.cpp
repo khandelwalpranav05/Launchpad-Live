@@ -15,8 +15,7 @@ int main() {
 		int continueWithSubarray = currSum + arr[i];
 		int startNewSubarray = arr[i];
 
-		// currSum = max(startNewSubarray, continueWithSubarray);
-		currSum  = currSum + arr[i];
+		currSum = max(startNewSubarray, continueWithSubarray);
 
 		if (currSum > maxSum) {
 			maxSum = currSum;
