@@ -10,6 +10,7 @@ int main() {
 	int left = 0;
 	int right = n - 1;
 
+	//Time: O(n)
 	while (left < right) {
 		swap(arr[left], arr[right]);
 		left++;

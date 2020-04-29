@@ -10,6 +10,7 @@ int main() {
 	int maxSum = arr[0];
 	int currSum = arr[0];
 
+	//Time: O(n)
 	for (int i = 1; i < n; i++) {
 
 		int continueWithSubarray = currSum + arr[i];

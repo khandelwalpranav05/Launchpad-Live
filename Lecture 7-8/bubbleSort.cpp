@@ -9,6 +9,7 @@ int main() {
 
 	int counter = 1;
 
+	//Tiem:O(n^2)
 	while (counter < n) {
 
 		for (int i = 0; i < n - counter; i++) {
@@ -17,14 +18,14 @@ int main() {
 			}
 		}
 
-		cout << "********" << " At the " << counter << " iteration " << "***************" << endl;
+		// cout << "********" << " At the " << counter << " iteration " << "***************" << endl;
 
-		for (int i = 0; i < n; i++) {
-			cout << arr[i] << " ";
-		}
-		cout << endl;
+		// for (int i = 0; i < n; i++) {
+		// 	cout << arr[i] << " ";
+		// }
+		// cout << endl;
 
-		cout << "***********************" << endl;
+		// cout << "***********************" << endl;
 
 		counter++;
 	}

@@ -9,6 +9,7 @@ int main() {
 
 	int minValue = arr[0];
 
+	//Time: O(n)
 	for (int i = 1; i < n; i++) {
 		if (arr[i] < minValue) {
 			minValue = arr[i];

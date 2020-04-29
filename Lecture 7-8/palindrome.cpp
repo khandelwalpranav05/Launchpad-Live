@@ -12,6 +12,7 @@ int main() {
 
 	bool flag = false;
 
+	//Time: O(n)
 	while (left <= right) {
 		if (arr[left] != arr[right]) {
 			cout << "Not a Palindrome" << endl;

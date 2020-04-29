@@ -9,6 +9,7 @@ int main() {
 
 	int divider = 1;
 
+	//Time: O(n^2) Worst Case
 	while (divider < n) {
 
 		for (int i = divider; i > 0; i--) {
@@ -19,14 +20,14 @@ int main() {
 			}
 		}
 
-		cout << "********" << " At the " << divider << " iteration " << "***************" << endl;
+		// cout << "********" << " At the " << divider << " iteration " << "***************" << endl;
 
-		for (int i = 0; i < n; i++) {
-			cout << arr[i] << " ";
-		}
-		cout << endl;
+		// for (int i = 0; i < n; i++) {
+		// 	cout << arr[i] << " ";
+		// }
+		// cout << endl;
 
-		cout << "***********************" << endl;
+		// cout << "***********************" << endl;
 
 		divider++;
 	}

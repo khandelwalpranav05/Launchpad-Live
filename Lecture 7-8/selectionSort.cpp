@@ -9,6 +9,7 @@ int main() {
 
 	int minIndex = 0;
 
+	// Time:O(n^2)
 	while (minIndex < n - 1) {
 
 		int minVal = arr[minIndex];
@@ -27,14 +28,14 @@ int main() {
 		minIndex++;
 
 
-		cout << "********" << " At the " << minIndex << " iteration " << "***************" << endl;
+		// cout << "********" << " At the " << minIndex << " iteration " << "***************" << endl;
 
-		for (int i = 0; i < n; i++) {
-			cout << arr[i] << " ";
-		}
-		cout << endl;
+		// for (int i = 0; i < n; i++) {
+		// 	cout << arr[i] << " ";
+		// }
+		// cout << endl;
 
-		cout << "***********************" << endl;
+		// cout << "***********************" << endl;
 
 	}
 

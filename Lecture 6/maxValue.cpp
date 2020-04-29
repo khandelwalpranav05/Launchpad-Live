@@ -9,6 +9,7 @@ int main() {
 
 	int maxVal = arr[0];
 
+	// Time: O(n)
 	for (int i = 1; i < n; i++) {
 		if (arr[i] > maxVal) {
 			maxVal = arr[i];

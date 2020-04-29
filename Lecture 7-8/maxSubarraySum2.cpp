@@ -9,6 +9,7 @@ int main() {
 
 	int maxSum = INT_MIN;
 
+	// Time: O(n^2)
 	for (int i = 0; i < n; i++) { // STARTing
 
 		int sum = 0;
