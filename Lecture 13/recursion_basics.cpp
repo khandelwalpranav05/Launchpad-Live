@@ -29,7 +29,15 @@ void printIncreasing(int n) {
 }
 
 void printDecreasing(int n) {
+	// RECURSIVE CASE
+	cout << n << endl;
+	printDecreasing(n - 1);
+	// return;
 
+	// BASE CASE
+	if (n == 0) {
+		return;
+	}
 }
 
 int main() {
