@@ -2,6 +2,8 @@
 
 using namespace std;
 
+//Time:O(n)
+// Space : O(n)
 int factorial(int n) {
 	// BASE CASE
 	if (n == 0) {
@@ -14,6 +16,9 @@ int factorial(int n) {
 	return ans;
 }
 
+
+//Time: O(n)
+//Space: O(n)
 void printIncreasing(int n) {
 	//Base Case
 	if (n == 1) {
@@ -28,6 +33,8 @@ void printIncreasing(int n) {
 	// return;
 }
 
+//Time: O(n)
+//Space: O(n)
 void printDecreasing(int n) {
 	// BASE CASE
 	if (n == 0) {
@@ -40,6 +47,8 @@ void printDecreasing(int n) {
 	// return;
 }
 
+//Time:O(n)
+// Space : O(n)
 int power(int n, int p) {
 	//Base
 	if (p == 0) {
@@ -51,6 +60,7 @@ int power(int n, int p) {
 	int ans = n * subProblem;
 	return ans;
 }
+
 /*
 	void function(int parameter) {
 		// BASE CASE (smallest subproblem situation)
@@ -66,6 +76,8 @@ int power(int n, int p) {
 	}
 */
 
+//Time: O(n)
+//Space: O(n)
 int sumTillN(int n) {
 	//BASE CASE
 	if (n == 0) {
@@ -109,6 +121,8 @@ void printDecreasingODDIncreasingEVEN(int n) {
 	}
 }
 
+//Time: O(n)
+//Space: O(n)
 int linearSearch(int si, int arr[], int n, int key) {
 	// BASE CASE
 	if (si == n) {
@@ -126,7 +140,7 @@ int linearSearch(int si, int arr[], int n, int key) {
 
 bool isSorted(int si, int arr[], int n) {
 	//BASE CASE
-	if (si == n - 1) {
+	if (si == n - 1 or n == 0) {
 		return true;
 	}
 
@@ -155,6 +169,24 @@ bool isSorted(int si, int arr[], int n) {
 	// }
 }
 
+//Time: O(log(p))
+//Space: O(log(p))
+int powerBetter(int n, int p) {
+	if (p == 0) {
+		return 1;
+	}
+
+	int subProblem = powerBetter(n, p / 2);
+
+	if (p & 1) {
+		int ans = subProblem * subProblem * n;
+		return ans;
+	} else {
+		int ans = subProblem * subProblem;
+		return ans;
+	}
+}
+
 int main() {
 
 	// cout << factorial(5) << endl;
@@ -176,11 +208,13 @@ int main() {
 
 	// cout << linearSearch(si, arr, n, key) << endl;
 
-	int arr[] = {1, 2, 3, 4, 5, 6};
-	int n = 6;
-	int si = 0;
+	// int arr[] = {1, 2, 3, 4, 5, 6};
+	// int n = 6;
+	// int si = 0;
 
-	cout << isSorted(si, arr, n) << endl;
+	// cout << isSorted(si, arr, n) << endl;
+
+	// cout << powerBetter(2, 6) << endl;
 
 
 	return 0;
