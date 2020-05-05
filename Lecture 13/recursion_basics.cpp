@@ -125,7 +125,34 @@ int linearSearch(int si, int arr[], int n, int key) {
 }
 
 bool isSorted(int si, int arr[], int n) {
+	//BASE CASE
+	if (si == n - 1) {
+		return true;
+	}
 
+	//RECURSIVE CASE
+	bool isSubproblemSorted = isSorted(si + 1, arr, n);
+
+	if (arr[si] <= arr[si + 1] and isSubproblemSorted) {
+		return true;
+	} else {
+		return false;
+	}
+
+	//RECURSIVE CASE
+	// if (arr[si] > arr[si + 1]) {
+	// 	return false;
+
+	// } else {
+	// 	// check for the rest of the array
+	// 	bool isSubproblemSorted = isSorted(si + 1, arr, n);
+	// 	// if (isSubproblemSorted) {
+	// 	// 	return true;
+	// 	// } else {
+	// 	// 	return false;
+	// 	// }
+	// 	return isSubproblemSorted;
+	// }
 }
 
 int main() {
@@ -148,6 +175,13 @@ int main() {
 	// int si = 0;
 
 	// cout << linearSearch(si, arr, n, key) << endl;
+
+	int arr[] = {1, 2, 3, 4, 5, 6};
+	int n = 6;
+	int si = 0;
+
+	cout << isSorted(si, arr, n) << endl;
+
 
 	return 0;
 }
