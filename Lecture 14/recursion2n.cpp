@@ -149,8 +149,35 @@ string removeDuplicate(string str) {
 	}
 }
 
-string moveToEnd(string str) {
+string moveXToEnd(string str) {
+	if (str.length() == 0) {
+		return str;
+	}
 
+	char ch = str[0];
+	string ros = str.substr(1);
+
+	string recursionResult = moveXToEnd(ros);
+
+	if (ch == 'x') {
+		return recursionResult + ch;
+	} else {
+		return ch + recursionResult;
+	}
+}
+
+void printSubsequence(string str, string ans) {
+	//BASE CASE
+	if (str.length() == 0) {
+		cout << ans << endl;
+		return;
+	}
+
+	char ch = str[0];
+	string ros = str.substr(1);
+
+	printSubsequence(ros, ans);
+	printSubsequence(ros, ans + ch);
 }
 
 int main() {
@@ -173,6 +200,10 @@ int main() {
 	// cout << addStar("abbcdde") << endl;
 
 	// cout << removeDuplicate("abbccdde") << endl;
+
+	// cout << moveToEnd("xaxbxcx") << endl;
+
+	printSubsequence("abc", "");
 
 	return 0;
 }
