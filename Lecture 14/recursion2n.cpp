@@ -133,6 +133,23 @@ string addStar(string str) {
 }
 
 string removeDuplicate(string str) {
+	if (str.length() == 0) {
+		return str;
+	}
+
+	char ch = str[0];
+	string ros = str.substr(1);
+
+	string recursionResult = removeDuplicate(ros);
+
+	if (ch == recursionResult[0]) {
+		return recursionResult;
+	} else {
+		return ch + recursionResult;
+	}
+}
+
+string moveToEnd(string str) {
 
 }
 
@@ -154,6 +171,8 @@ int main() {
 	// cout << countMazePath(0, 0, 2, 2) << endl;
 
 	// cout << addStar("abbcdde") << endl;
+
+	// cout << removeDuplicate("abbccdde") << endl;
 
 	return 0;
 }
