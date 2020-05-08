@@ -70,7 +70,7 @@ int countBoardPath(int start, int end) {
 	}
 
 	if (start > end) {
-		return -1;
+		return 0;
 	}
 
 	//RECURSIVE CASE

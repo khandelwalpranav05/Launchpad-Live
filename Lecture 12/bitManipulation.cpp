@@ -38,13 +38,15 @@ int main() {
 	// cout << (7 & 1) << endl;
 	// cout << (456 & 1) << endl;
 
-	if (7 % 2 != 0) {
-		cout << "ODD" << endl;
-	}
+	// if (7 % 2 != 0) {
+	// 	cout << "ODD" << endl;
+	// }
 
-	if (7 & 1) {
-		cout << "ODD" << endl;
-	}
+	// if (7 & 1) {
+	// 	cout << "ODD" << endl;
+	// }
+
+	cout << (INT_MIN >> 1) << endl;
 
 	return 0;
 }
