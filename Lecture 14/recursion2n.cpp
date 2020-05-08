@@ -51,11 +51,12 @@ int countBinaryString(int n) {
 	}
 
 	//RECURSIVE CASE
-	int withZero = countBinaryString(n - 1);
-	int withOne = countBinaryString(n - 2);
+	// int withZero = countBinaryString(n - 1);
+	// int withOne = countBinaryString(n - 2);
 
-	int total = withZero + withOne;
-	return total;
+	// int total = withZero + withOne;
+	// return total;
+	return countBinaryString(n - 1) + countBinaryString(n - 2);
 }
 
 int pairingProblem(int n) {
@@ -80,7 +81,59 @@ int countBoardPath(int start, int end) {
 		count += countBoardPath(start + jump, end);
 	}
 
+	// // start = 5
+
+	// countBoardPath(start + 1, end);
+	// countBoardPath(start + 2, end);
+	// countBoardPath(start + 3, end);
+	// countBoardPath(start + 4, end);
+	// countBoardPath(start + 5, end);
+	// countBoardPath(start + 6, end);
+
+
 	return count;
+}
+
+int countMazePath(int sr, int sc, int er, int ec) {
+	//BASE CASE
+	if (sr == er && sc == ec) {
+		return 1;
+	}
+
+	if (sr > er or sc > ec) {
+		return 0;
+	}
+
+	//RECURSIVE CASE
+	int rightMove = countMazePath(sr, sc + 1, er, ec);
+	int downMove = countMazePath(sr + 1, sc, er, ec);
+
+	int total = rightMove + downMove;
+	return total;
+}
+
+string addStar(string str) {
+	if (str.length() == 0) {
+		return str;
+	}
+
+	char ch = str[0];
+	string ros = str.substr(1); // subproblem
+
+	//recursion call
+	string recursionResult = addStar(ros);
+
+	// my work
+
+	if (ch == recursionResult[0]) {
+		return ch + (string)"*" + recursionResult;
+	} else {
+		return ch + recursionResult;
+	}
+}
+
+string removeDuplicate(string str) {
+
 }
 
 int main() {
@@ -96,7 +149,11 @@ int main() {
 
 	// cout << countBinaryString(3) << endl;
 
-	cout << countBoardPath(0, 4) << endl;
+	// cout << countBoardPath(0, 4) << endl;
+
+	// cout << countMazePath(0, 0, 2, 2) << endl;
+
+	// cout << addStar("abbcdde") << endl;
 
 	return 0;
 }
