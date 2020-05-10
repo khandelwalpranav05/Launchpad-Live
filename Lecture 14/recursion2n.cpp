@@ -174,9 +174,9 @@ void printSubsequence(string str, string ans) {
 	}
 
 	char ch = str[0];
-	string ros = str.substr(1);
+	string ros = str.substr(1); // subproblem
 
-	printSubsequence(ros, ans);
+	printSubsequence(ros, ans); //recursion
 	printSubsequence(ros, ans + ch);
 }
 
