@@ -32,7 +32,7 @@ void printKeypad(string str, string ans) {
 	}
 
 	char ch = str[0];
-	string ros = str.substr(1);
+	string ros = str.substr(1); // "23"
 
 	// ch -> 4
 	int idx = ch - '0';
@@ -47,14 +47,56 @@ void printKeypad(string str, string ans) {
 	// recursion("23","i")
 }
 
-void printBoardPath(int start, int end, string path) {
+void printBoardPath(int start, int end, string ans) {
+	//BASE CASE
+	if (start == end) {
+		cout << ans << endl;
+		return;
+	}
 
+	if (start > end) {
+		return;
+	}
+
+	// RECURSIVE CASE
+
+	for (int jump = 1; jump <= 6; jump++) {
+
+		string temp = to_string(jump);
+		printBoardPath(start + jump, end, ans + temp);
+	}
+}
+
+void printMazePath(int sr, int sc, int er, int ec, string ans) {
+	// TODO
+	// HOMEWORK
+}
+
+int reduceToOne(int n) {
+	if (n == 1) {
+		return 0;
+	}
+
+	int count1 = INT_MAX, count2 = INT_MAX, count3 = INT_MAX;
+
+	if (n % 2 == 0) {
+		count2 = reduceToOne(n / 2); //recursion
+	}
+
+	if (n % 3 == 0) {
+		count3 = reduceToOne(n / 3); //recursion
+	}
+
+	count1 = reduceToOne(n - 1); //recursion
+
+	int minOperation = min(count1, min(count2, count3));
+	return minOperation + 1;
 }
 
 int main() {
 
 	// printPermutations("abc", "");
-	// printKeypad("423", "");
+	// printKeypad("	423", "");
 
 	// 423
 	// 4 -> "qwerty" (6)
@@ -62,6 +104,10 @@ int main() {
 	// 3 -> "efg" (3)
 
 	// total = 6*4*3
+
+	// printBoardPath(0, 10, "");
+
+	// cout << reduceToOne(10) << endl;
 
 	return 0;
 }
