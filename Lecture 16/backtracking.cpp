@@ -103,6 +103,16 @@ int countNQueens(int board[4][4], int row, int col, int n) {
 bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) {
 	//BASE CASE
 	if (sr == er and sc == ec) {
+		// PRINT
+		sol[er][ec] = 1;
+		for (int i = 0; i <= er; i++) {
+			for (int j = 0; j <= ec; j++) {
+				cout << sol[i][j] << " ";
+			}
+			cout << endl;
+		}
+		cout << "*****************" << endl;
+
 		return true;
 	}
 
@@ -113,6 +123,8 @@ bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) 
 	if (maze[sr][sc] == 'X') {
 		return false;
 	}
+
+	sol[sr][sc] = 1;
 
 	// RECURSIVE CASE
 	bool rightMove = ratInAMaze(maze, sr, sc + 1, er, ec, sol);
@@ -125,6 +137,10 @@ bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) 
 	return false;
 }
 
+void printRatInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) {
+
+}
+
 int main() {
 
 	// int board[4][4] = {0};
@@ -133,13 +149,15 @@ int main() {
 	// cout << NQueens(board, 0, n) << endl;
 
 	int n = 4;
-	char maze[4][4] = { {'0', '0', '0', 'X'},
+	char maze[4][4] = { {'0', '0', '0', '0'},
 		{'0', '0', 'X', '0'},
 		{'0', 'X', '0', '0'},
 		{'X', '0', '0', '0'}
 	};
 
-	cout << ratInAMaze(maze, 0, 0, n - 1, n - 1) << endl;
+	int sol[4][4] = {0};
+
+	cout << ratInAMaze(maze, 0, 0, n - 1, n - 1, sol) << endl;
 
 	return 0;
 }
