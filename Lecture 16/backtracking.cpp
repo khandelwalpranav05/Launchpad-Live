@@ -82,9 +82,9 @@ bool NQueens(int board[4][4], int row, int n) {
 
 			bool rest_of_the_queens = NQueens(board, row + 1, n); // recursion
 
-			if (rest_of_the_queens) { // if orientation is correct
-				return true; 			// return true
-			}
+			// if (rest_of_the_queens) { // if orientation is correct
+			// 	return true; 			// return true
+			// }
 
 			// if we here that means the subproblem was false
 			board[row][col] = 0; // remove your current queen !BACKTRAKCING!
@@ -100,8 +100,29 @@ int countNQueens(int board[4][4], int row, int col, int n) {
 	return 0;
 }
 
-bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec) {
+bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) {
+	//BASE CASE
+	if (sr == er and sc == ec) {
+		return true;
+	}
 
+	if (sr > er or sc > ec) {
+		return false;
+	}
+
+	if (maze[sr][sc] == 'X') {
+		return false;
+	}
+
+	// RECURSIVE CASE
+	bool rightMove = ratInAMaze(maze, sr, sc + 1, er, ec, sol);
+	bool downMove = ratInAMaze(maze, sr + 1, sc, er, ec, sol);
+
+	if (rightMove or downMove) {
+		return true;
+	}
+
+	return false;
 }
 
 int main() {
@@ -111,11 +132,14 @@ int main() {
 
 	// cout << NQueens(board, 0, n) << endl;
 
-	char maze[4][4] = { {'0', '0', '0', '0'},
+	int n = 4;
+	char maze[4][4] = { {'0', '0', '0', 'X'},
 		{'0', '0', 'X', '0'},
 		{'0', 'X', '0', '0'},
-		{'0', '0', '0', '0'}
+		{'X', '0', '0', '0'}
 	};
+
+	cout << ratInAMaze(maze, 0, 0, n - 1, n - 1) << endl;
 
 	return 0;
 }
