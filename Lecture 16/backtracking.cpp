@@ -66,7 +66,7 @@ bool NQueens(int board[4][4], int row, int n) {
 
 		cout << "********************************" << endl;
 
-		return true;
+		return true;// for printing convert to -> return false;
 	}
 
 
@@ -95,12 +95,27 @@ bool NQueens(int board[4][4], int row, int n) {
 	return false;
 }
 
+int countNQueens(int board[4][4], int row, int col, int n) {
+	//HOMEWORK
+	return 0;
+}
+
+bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec) {
+
+}
+
 int main() {
 
-	int board[4][4] = {0};
-	int n = 4;
+	// int board[4][4] = {0};
+	// int n = 4;
 
-	cout << NQueens(board, 0, n) << endl;
+	// cout << NQueens(board, 0, n) << endl;
+
+	char maze[4][4] = { {'0', '0', '0', '0'},
+		{'0', '0', 'X', '0'},
+		{'0', 'X', '0', '0'},
+		{'0', '0', '0', '0'}
+	};
 
 	return 0;
 }
