@@ -134,6 +134,146 @@ int painterProblem(int board[], int n, int painters, int perUnitTime) {
 	return ans;
 }
 
+bool isValid(int arr[], int n, int cows, int distanceLimit) {
+
+	int previousCowPosition = arr[0];
+	int cowsPlacedUptilThisPoint = 1;
+
+	for (int i = 1; i < n; i++) {
+
+		int currentCowPosition = arr[i];
+
+		int gapBetweenCows = currentCowPosition - previousCowPosition;
+		if (gapBetweenCows >= distanceLimit) {
+			cowsPlacedUptilThisPoint++;
+			previousCowPosition = arr[i];
+
+			if (cowsPlacedUptilThisPoint == cows) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+int aggressiveCows(int arr[], int n, int cows) {
+
+	sort(arr, arr + n);
+
+	int minDist = 1;
+	int maxDist = arr[n - 1] - arr[0];
+
+	int start = minDist;
+	int end = maxDist;
+
+	int ans = 1;
+
+	while (start <= end) {
+
+		int mid = (start + end) / 2;
+
+		if (isValid(arr, n, cows, mid)) {
+			ans = mid;
+			start = mid + 1;
+		} else {
+			end = mid - 1;
+		}
+
+	}
+
+	return ans;
+}
+
+bool canGive(long n, long m, long x, long y, long a) {
+	return (x * a <= m + y * (n - a));
+}
+
+long winningCBSchorlarship(long n, long m, long x, long y) {
+
+	long start = 0;
+	long end = n;
+
+	long ans = 0;
+
+	while (start <= end) {
+
+		long mid = (start + end) / 2;
+
+		if (canGive(n, m, x, y, mid)) {
+			ans = mid;
+			start = mid + 1;
+		} else {
+			end = mid - 1;
+		}
+
+	}
+
+	return ans;
+}
+
+void merge(int arr[], int start, int end) {
+
+	int mid = (start + end) / 2;
+
+	int i = start; // iterate left Hfl
+	int j = mid + 1; // iterate right Half
+
+
+	int temp[end - start + 1];
+	int k = 0; // iterate temp array
+
+	while (i <= mid and j <= end) {
+
+		if (arr[i] < arr[j]) {
+			temp[k] = arr[i];
+			i++;
+			k++;
+
+		} else {
+			temp[k] = arr[j];
+			j++;
+			k++;
+		}
+	}
+
+	while (j <= end) {
+		temp[k] = arr[j];
+		j++;
+		k++;
+	}
+
+	while (i <= mid) {
+		temp[k] = arr[i];
+		i++;
+		k++;
+	}
+
+	// temp is sorted but arr is not sorted
+
+	int pos = 0;
+	for (int x = start; x <= end; x++) {
+		arr[x] = temp[pos];
+		pos++;
+	}
+
+	//DONE
+}
+
+void mergeSort(int arr[], int start, int end) {
+	// BASE CASE
+	if (start == end) {
+		return;
+	}
+
+	int mid = (start + end) / 2;
+
+	mergeSort(arr, start, mid); // left Half
+	mergeSort(arr, mid + 1, end); // right Half
+
+	merge(arr, start, end);
+}
+
 int main() {
 
 	// int arr[] = {12, 23, 31, 45, 57, 69, 73, 82};
@@ -142,11 +282,38 @@ int main() {
 
 	// cout << binarySearch(arr, n, key) << endl;
 
-	int board[] = {10, 20, 30, 40};
-	int n = 4;
-	int painters = 2;
+	// int board[] = {10, 20, 30, 40};
+	// int n = 4;
+	// int painters = 2;
 
-	cout << painterProblem(board, n, painters, 1) << endl;
+	// cout << painterProblem(board, n, painters, 1) << endl;
+
+	// int barns[] = {2, 1, 4, 9, 8};
+	// int n = 5;
+	// int cows = 3;
+
+	// cout << aggressiveCows(barns, n, cows) << endl;
+
+	// long n = 5;
+	// long m = 10;
+	// long x = 2;
+	// long y = 1;
+
+	// cout << winningCBSchorlarship(n, m, x, y) << endl;
+
+	// int arr[] = {3, 5, 8, 12, 2, 4, 16, 19};
+	// int n = 8;
+
+	// merge(arr, 0, n - 1);
+
+	int arr[] = {5, 3, 12, 8, 19, 16, 2, 4};
+	int n = 8;
+	mergeSort(arr, 0, n - 1);
+
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
 
 	return 0;
 }
