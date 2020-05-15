@@ -10,7 +10,7 @@ int binarySearch(int arr[], int n, int key) {
 
 	while (start <= end) {
 
-		int mid = (start + end) / 2;
+		int mid = start + (end - start) / 2;
 
 		if (arr[mid] == key) {
 			return mid;
@@ -274,6 +274,71 @@ void mergeSort(int arr[], int start, int end) {
 	merge(arr, start, end);
 }
 
+void quickSort(int arr[], int start, int end) {
+	// BASE CASE
+	if (start >= end) {
+		return;
+	}
+
+	int mid = (start + end) / 2;
+
+	int left = start;
+	int right = end;
+
+	int pivot = arr[mid];
+
+	while (left <= right) {
+
+		while (arr[left] < pivot) {
+			left++;
+		}
+
+		while (arr[right] > pivot) {
+			right--;
+		}
+
+		if (left <= right) {
+			swap(arr[left], arr[right]);
+			left++;
+			right--;
+		}
+	}
+
+	quickSort(arr, start, right); // left Subproblem
+	quickSort(arr, left, end); // right Subproblem
+}
+
+int searchInRotatedArray(int arr[], int start, int end, int target) {
+	//BASE CASE
+	if (start > end) {
+		return -1;
+	}
+
+	int mid = (start + end) / 2;
+
+	if (arr[mid] == target) {
+		return mid;
+	}
+
+	if (arr[mid] >= arr[start]) { // mid is on the left side
+
+		if (target >= arr[start] and target < arr[mid]) {
+			return searchInRotatedArray(arr, start, mid - 1, target);
+		} else {
+			return searchInRotatedArray(arr, mid + 1, end, target);
+		}
+
+	} else { // mid is on the right side
+
+		if (target > arr[mid] and target <= arr[end]) {
+			return searchInRotatedArray(arr, mid + 1, end, target);
+		} else {
+			return searchInRotatedArray(arr, start, mid - 1, target);
+		}
+
+	}
+}
+
 int main() {
 
 	// int arr[] = {12, 23, 31, 45, 57, 69, 73, 82};
@@ -306,14 +371,24 @@ int main() {
 
 	// merge(arr, 0, n - 1);
 
-	int arr[] = {5, 3, 12, 8, 19, 16, 2, 4};
-	int n = 8;
-	mergeSort(arr, 0, n - 1);
+	// int arr[] = {5, 3, 12, 8, 19, 16, 2, 4};
+	// int n = 8;
+	// mergeSort(arr, 0, n - 1);
 
-	for (int i = 0; i < n; i++) {
-		cout << arr[i] << " ";
-	}
-	cout << endl;
+	// for (int i = 0; i < n; i++) {
+	// 	cout << arr[i] << " ";
+	// }
+	// cout << endl;
+
+	// int arr[] = {7, 6, 5, 4, 3, 2, 1};
+	// int n = 7;
+
+	// quickSort(arr, 0, n - 1);
+
+	// for (int i = 0; i < n; i++) {
+	// 	cout << arr[i] << " ";
+	// }
+	// cout << endl;
 
 	return 0;
 }
