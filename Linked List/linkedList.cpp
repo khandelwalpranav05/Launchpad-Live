@@ -71,20 +71,87 @@ void insertAtTail(ListNode* &head, int data) {
 	temp->next = n;
 }
 
+void insertAtAnyIndex(ListNode* &head, int data, int pos) {
+	// EDGE CASES
+	if (pos <= 1 or head == NULL) {
+		insertAtHead(head, data);
+		return;
+	}
+
+	if (pos >= size(head)) {
+		insertAtTail(head, data);
+	}
+
+	ListNode* temp = head;
+
+	int jump = 1;
+	while (jump < pos - 1) {
+		temp = temp->next;
+		jump++;
+	}
+
+	ListNode* n = new ListNode(data);
+
+	n->next = temp->next;
+	temp->next = n;
+}
+
+void deleteAtHead(ListNode* &head) {
+	//EDGE CASE
+	if (head == NULL) {
+		return;
+	}
+
+	ListNode* toBeDeleted = head;
+	head = head->next;
+	delete toBeDeleted;
+}
+
+void deleteAtTail(ListNode* &head) {
+	if (head == NULL) {
+		return;
+	}
+
+	if (head->next == NULL) { // there is only 1 node in my linked list
+		deleteAtHead(head);
+		return;
+	}
+
+	ListNode* temp = head;
+
+	while (temp->next->next != NULL) {
+		temp = temp->next;
+	}
+
+	ListNode* toBeDeleted = temp->next;
+	temp->next = NULL;
+	delete toBeDeleted;
+}
+
 int main() {
 
 	ListNode* head = NULL;
 
-	insertAtTail(head, 789);
+	// insertAtTail(head, 789);
+
+	// display(head);
+
+	insertAtHead(head, 2);
+	insertAtHead(head, 4);
+	insertAtHead(head, 6);
+	insertAtHead(head, 9);
+
+	// // cout << "First Traversal" << endl;
+	display(head);
+
+	// deleteAtHead(head);
+
+	deleteAtTail(head);
 
 	display(head);
 
-	// insertAtHead(head, 2);
-	// insertAtHead(head, 4);
-	// insertAtHead(head, 6);
-	// insertAtHead(head, 9);
+	// insertAtAnyIndex(head, 987, 3);
 
-	// // cout << "First Traversal" << endl;
 	// display(head);
 
 	// // cout << size(head) << endl;
