@@ -128,6 +128,23 @@ void deleteAtTail(ListNode* &head) {
 	delete toBeDeleted;
 }
 
+bool search(ListNode* head, int key) {
+	// TODO
+	//HOME WORK
+	return true;
+}
+
+void deleteAtAnyIndex(ListNode* &head, int pos) {
+	// TODO HOME WORK
+}
+
+ListNode* midPoint(ListNode* head) {
+	// TODO
+	// HOMEWORK
+
+	return NULL;
+}
+
 int main() {
 
 	ListNode* head = NULL;
