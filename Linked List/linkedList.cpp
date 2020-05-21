@@ -40,21 +40,59 @@ void display(ListNode* &head) {
 
 int size(ListNode* head) {
 
+	ListNode* temp = head;
+	int len = 0;
+
+	while (temp != NULL) {
+		len++;
+		temp = temp->next;
+	}
+
+	return len;
+}
+
+void insertAtTail(ListNode* &head, int data) {
+	if (head == NULL) {
+		// no node inside the linked list
+		// no difference between insert at head and tail
+		insertAtHead(head, data);
+		return;
+	}
+
+	ListNode* n = new ListNode(data);
+
+	ListNode* temp = head;
+
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+
+	// now you are at the last node of your current linked list
+	temp->next = n;
 }
 
 int main() {
 
 	ListNode* head = NULL;
 
-	insertAtHead(head, 2);
-	insertAtHead(head, 4);
-	insertAtHead(head, 6);
-	insertAtHead(head, 9);
+	insertAtTail(head, 789);
 
-	cout << "First Traversal" << endl;
 	display(head);
 
-	cout << length(head) << endl;
+	// insertAtHead(head, 2);
+	// insertAtHead(head, 4);
+	// insertAtHead(head, 6);
+	// insertAtHead(head, 9);
+
+	// // cout << "First Traversal" << endl;
+	// display(head);
+
+	// // cout << size(head) << endl;
+
+	// insertAtTail(head, 23);
+	// insertAtTail(head, 45);
+
+	// display(head);
 
 	// cout << "Second Traversal" << endl;
 	// display(head);
