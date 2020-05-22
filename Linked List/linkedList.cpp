@@ -23,16 +23,16 @@ void insertAtHead(ListNode* &head, int data) {
 	// cout << "Insert Function is ending" << endl;
 }
 
-void display(ListNode* &head) {
+void display(ListNode* head2) {
 
 	// the head inside this function is copy of the head
 	// inside the main funciton
 
-	ListNode* temp = head;
+	// ListNode* temp = head;
 
-	while (temp != NULL) {
-		cout << temp->val << " -> ";
-		temp = temp->next;
+	while (head2 != NULL) {
+		cout << head2->val << " -> ";
+		head2 = head2->next;
 	}
 
 	cout << "NULL" << endl;
@@ -129,20 +129,58 @@ void deleteAtTail(ListNode* &head) {
 }
 
 bool search(ListNode* head, int key) {
-	// TODO
-	//HOME WORK
-	return true;
+	ListNode* temp = head;
+
+	while (temp != NULL) {
+		if (temp->val == key) {
+			return true;
+		}
+		temp = temp->next;
+	}
+
+	return false;
 }
 
 void deleteAtAnyIndex(ListNode* &head, int pos) {
-	// TODO HOME WORK
+	if (head == NULL or head->next == NULL or pos <= 1) {
+		deleteAtHead(head);
+		return;
+	}
+
+	if (pos >= size(head)) {
+		deleteAtTail(head);
+		return;
+	}
+
+	int jump = 1;
+	ListNode* temp = head;
+
+	while (jump < pos - 1) {
+		jump++;
+		temp = temp->next;
+	}
+
+	ListNode* toBeDeleted = temp->next;
+	temp->next = temp->next->next;
+	delete toBeDeleted;
 }
 
 ListNode* midPoint(ListNode* head) {
-	// TODO
-	// HOMEWORK
 
-	return NULL;
+	ListNode* slow = head;
+	ListNode * fast = head;
+
+	// ODD.            // EVEN
+	while (fast->next != NULL and fast->next->next != NULL) {
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+
+	return slow;
+}
+
+ListNode* reverseRecursive(ListNode* head) {
+
 }
 
 int main() {
@@ -161,15 +199,29 @@ int main() {
 	// // cout << "First Traversal" << endl;
 	display(head);
 
-	// deleteAtHead(head);
-
-	deleteAtTail(head);
+	head = reverseRecursive(head);
 
 	display(head);
+
+	// deleteAtHead(head);
+
+	// deleteAtTail(head);
+
+	// display(head);
 
 	// insertAtAnyIndex(head, 987, 3);
 
 	// display(head);
+
+	// ListNode* mid = midPoint(head);
+	// cout << mid->val << endl;
+
+	// deleteAtAnyIndex(head, 3);
+
+	// display(head);
+
+	// mid = midPoint(head);
+	// cout << mid->val << endl;
 
 	// // cout << size(head) << endl;
 
