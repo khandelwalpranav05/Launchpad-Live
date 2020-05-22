@@ -196,32 +196,45 @@ ListNode* reverseRecursive(ListNode* head) {
 
 ListNode* reverseIterative(ListNode* head) {
 
+	ListNode* prev = NULL;
+	ListNode* curr = head;
 
+	while (curr != NULL) {
+		ListNode* n = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = n;
+	}
+
+	return prev;
+}
+
+ListNode* merge(ListNode* a, ListNode* b) {
 
 }
 
 int main() {
 
-	ListNode* head = NULL;
+	// ListNode* head = NULL;
 
-	// insertAtTail(head, 789);
+	// // insertAtTail(head, 789);
+	// // display(head);
+
+	// insertAtHead(head, 2);
+	// insertAtHead(head, 4);
+	// insertAtHead(head, 6);
+	// insertAtHead(head, 9);
+
+	// // // cout << "First Traversal" << endl;
 	// display(head);
 
-	insertAtHead(head, 2);
-	insertAtHead(head, 4);
-	insertAtHead(head, 6);
-	insertAtHead(head, 9);
+	// ListNode* newHead = reverseRecursive(head);
 
-	// // cout << "First Traversal" << endl;
-	display(head);
+	// display(newHead);
 
-	ListNode* newHead = reverseRecursive(head);
+	// ListNode* againHead = reverseIterative(newHead);
 
-	display(newHead);
-
-	ListNode* againHead = reverseIterative(newHead);
-
-	display(againHead);
+	// display(againHead);
 
 	// deleteAtHead(head);
 
@@ -253,6 +266,31 @@ int main() {
 	// cout << "Second Traversal" << endl;
 	// display(head);
 
+	ListNode* head1 = NULL;
+
+	insertAtTail(head1, 1);
+	insertAtTail(head1, 3);
+	insertAtTail(head1, 5);
+	insertAtTail(head1, 8);
+	insertAtTail(head1, 9);
+
+	ListNode* head2 = NULL;
+
+	insertAtTail(head2, 2);
+	insertAtTail(head2, 4);
+	insertAtTail(head2, 6);
+	insertAtTail(head2, 7);
+
+	cout << "First Linked List ******************" << endl;
+	display(head1);
+
+	cout << "Second Linked List ******************" << endl;
+	display(head2);
+
+	ListNode* mergedList = merge(head1, head2);
+
+	cout << " Merged Linked List ******************" << endl;
+	display(mergedList);
 
 	// string str = "Pransjdfbjndknfwndkldjnfkwndkwndbwav";
 
