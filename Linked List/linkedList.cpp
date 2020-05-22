@@ -210,8 +210,60 @@ ListNode* reverseIterative(ListNode* head) {
 }
 
 ListNode* merge(ListNode* a, ListNode* b) {
+	//BASE CASE
+	if (a == NULL) {
+		return b;
+	}
 
+	if (b == NULL) {
+		return a;
+	}
+
+	ListNode* newHead;
+
+	if (a->val < b->val) {
+		newHead = a;
+		newHead->next = merge(a->next, b);
+	} else {
+		newHead = b;
+		newHead->next = merge(a, b->next);
+	}
+
+	return newHead;
 }
+
+// Submit this on leetcode 148 (Sort List)
+ListNode* mergeSort(ListNode* head) {
+	// HOMEWORK
+	return NULL;
+}
+
+// try submitting on leetcode 25 (slightly different)
+ListNode* kReverse(ListNode* head, int k) {
+	if (head == NULL or head->next == NULL) {
+		return head;
+	}
+
+	ListNode* prev = NULL;
+	ListNode* curr = head;
+
+	int steps = 1;
+
+	while (steps <= k and curr != NULL) {
+		ListNode* n = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = n;
+		steps++;
+	}
+
+	head->next = kReverse(curr, k);
+
+	ListNode* newHead = prev;
+	return newHead;
+}
+
+// 141. Linked List Cycle (HomeWork)
 
 int main() {
 
@@ -266,31 +318,74 @@ int main() {
 	// cout << "Second Traversal" << endl;
 	// display(head);
 
-	ListNode* head1 = NULL;
+	// ************ MERGE 2 SORTED LIST ***************
 
-	insertAtTail(head1, 1);
-	insertAtTail(head1, 3);
-	insertAtTail(head1, 5);
-	insertAtTail(head1, 8);
-	insertAtTail(head1, 9);
+	// ListNode* head1 = NULL;
 
-	ListNode* head2 = NULL;
+	// insertAtTail(head1, 1);
+	// insertAtTail(head1, 3);
+	// insertAtTail(head1, 5);
+	// insertAtTail(head1, 8);
+	// insertAtTail(head1, 9);
 
-	insertAtTail(head2, 2);
-	insertAtTail(head2, 4);
-	insertAtTail(head2, 6);
-	insertAtTail(head2, 7);
+	// ListNode* head2 = NULL;
 
-	cout << "First Linked List ******************" << endl;
-	display(head1);
+	// insertAtTail(head2, 2);
+	// insertAtTail(head2, 4);
+	// insertAtTail(head2, 6);
+	// insertAtTail(head2, 7);
 
-	cout << "Second Linked List ******************" << endl;
-	display(head2);
+	// cout << "First Linked List ******************" << endl;
+	// display(head1);
 
-	ListNode* mergedList = merge(head1, head2);
+	// cout << "Second Linked List ******************" << endl;
+	// display(head2);
 
-	cout << " Merged Linked List ******************" << endl;
-	display(mergedList);
+	// ListNode* mergedList = merge(head1, head2);
+
+	// cout << "Merged Linked List ******************" << endl;
+	// display(mergedList);
+
+	// ************ MERGE SORT ***************
+
+	// ListNode* head = NULL;
+
+	// insertAtTail(head, 1);
+	// insertAtTail(head, 6);
+	// insertAtTail(head, 5);
+	// insertAtTail(head, 3);
+	// insertAtTail(head, 4);
+	// insertAtTail(head, 2);
+
+	// cout << "Unsorted Linked List *****************" << endl;
+	// display(head);
+
+	// head = mergeSort(head);
+
+	// cout << "Sorted Linked List ***************" << endl;
+	// display(head);
+
+	//********** K REVERSE **************
+
+	ListNode* head = NULL;
+
+	insertAtTail(head, 1);
+	insertAtTail(head, 2);
+	insertAtTail(head, 3);
+	insertAtTail(head, 4);
+	insertAtTail(head, 5);
+	insertAtTail(head, 6);
+	insertAtTail(head, 7);
+	insertAtTail(head, 8);
+	// insertAtTail(head, 9);
+
+	cout << "Before ***************" << endl;
+	display(head);
+
+	head = kReverse(head, 3);
+
+	cout << "After ******************" << endl;
+	display(head);
 
 	// string str = "Pransjdfbjndknfwndkldjnfkwndkwndbwav";
 
