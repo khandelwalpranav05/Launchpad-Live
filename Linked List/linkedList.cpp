@@ -180,6 +180,23 @@ ListNode* midPoint(ListNode* head) {
 }
 
 ListNode* reverseRecursive(ListNode* head) {
+	// BASE CASE
+	if (head == NULL or head->next == NULL) {
+		return head;
+	}
+
+	ListNode* newHead = reverseRecursive(head->next);
+
+	// my Work
+	ListNode* curr = head;
+	curr->next->next = curr;
+	curr->next = NULL;
+	return newHead;
+}
+
+ListNode* reverseIterative(ListNode* head) {
+
+
 
 }
 
@@ -188,7 +205,6 @@ int main() {
 	ListNode* head = NULL;
 
 	// insertAtTail(head, 789);
-
 	// display(head);
 
 	insertAtHead(head, 2);
@@ -199,9 +215,13 @@ int main() {
 	// // cout << "First Traversal" << endl;
 	display(head);
 
-	head = reverseRecursive(head);
+	ListNode* newHead = reverseRecursive(head);
 
-	display(head);
+	display(newHead);
+
+	ListNode* againHead = reverseIterative(newHead);
+
+	display(againHead);
 
 	// deleteAtHead(head);
 
