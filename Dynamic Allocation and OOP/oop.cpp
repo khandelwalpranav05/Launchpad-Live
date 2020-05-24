@@ -96,8 +96,14 @@ int main() {
 	// cout << "Speed of the car is " << c.getSpeed() << endl;
 	// cout << "Name of the Car is " << c.getName() << endl;
 
-	Car t("Honda", 120, 7000);
+	// Car t("Honda", 120, 7000);
 	Car *p = new Car("Volkswagon", 450, 90000);
+
+	cout << (*p).price << endl;
+	cout << p->price << endl;
+
+	(*p).display();
+	p->display();
 
 	// c.display();
 

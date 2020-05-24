@@ -89,7 +89,7 @@ int reduceToOne(int n) {
 
 	count1 = reduceToOne(n - 1); //recursion
 
-	int minOperation = min(count1, min(count2, count3));
+	int minOperation = min(count2, min(count1, count3));
 	return minOperation + 1;
 }
 

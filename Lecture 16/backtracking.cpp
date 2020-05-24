@@ -95,9 +95,27 @@ bool NQueens(int board[4][4], int row, int n) {
 	return false;
 }
 
-int countNQueens(int board[4][4], int row, int col, int n) {
-	//HOMEWORK
-	return 0;
+int countNQueens(int board[4][4], int row, int n) {
+	//BASE CASE
+	if (row == n) {
+		return 1;
+	}
+
+	int count = 0;
+
+	for (int col = 0; col < n; col++) {
+
+		if (isSafe(board, row, col, n)) {
+
+			board[row][col] = 1; // my work
+
+			count += countNQueens(board, row + 1, n); // recursion
+
+			board[row][col] = 0; //backtracking
+		}
+	}
+
+	return count;
 }
 
 bool ratInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4][4]) {
@@ -175,21 +193,22 @@ void printRatInAMaze(char maze[4][4], int sr, int sc, int er, int ec, int sol[4]
 
 int main() {
 
-	// int board[4][4] = {0};
-	// int n = 4;
+	int board[4][4] = {0};
+	int n = 4;
+	cout << countNQueens(board, 0, n) << endl;
 
 	// cout << NQueens(board, 0, n) << endl;
 
-	int n = 4;
-	char maze[4][4] = { {'0', '0', '0', '0'},
-		{'0', '0', 'X', '0'},
-		{'0', '0', '0', '0'},
-		{'X', '0', '0', '0'}
-	};
+	// int n = 4;
+	// char maze[4][4] = { {'0', '0', '0', '0'},
+	// 	{'0', '0', 'X', '0'},
+	// 	{'0', '0', '0', '0'},
+	// 	{'X', '0', '0', '0'}
+	// };
 
-	int sol[4][4] = {0};
+	// int sol[4][4] = {0};
 
-	cout << ratInAMaze(maze, 0, 0, n - 1, n - 1, sol) << endl;
+	// cout << ratInAMaze(maze, 0, 0, n - 1, n - 1, sol) << endl;
 	// printRatInAMaze(maze, 0, 0, n - 1, n - 1, sol);
 	return 0;
 }
