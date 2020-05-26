@@ -90,6 +90,28 @@ void printNextGreater(int arr[], int n) {
 
 }
 
+void stockSpan(int arr[], int n) {
+
+	stack<int> s;
+
+	for (int i = 0; i < n; i++) {
+
+		while (!s.empty() and arr[s.top()] < arr[i]) {
+			s.pop();
+		}
+
+		int days;
+		if (!s.empty()) {
+			days = i - s.top();
+		} else {
+			days = i + 1;
+		}
+
+		cout << arr[i] << " -> " << days << endl;
+		s.push(i);
+	}
+}
+
 int main() {
 
 	// cout << isBalanced("((()))(") << endl; // false
@@ -100,10 +122,15 @@ int main() {
 	// cout << isDuplicate("((a+b))") << endl; // true
 	// cout << isDuplicate("((a+b) + (c))") << endl; // false;
 
-	int arr[] = {54, 5, 3, 6, 2, 10, 14};
+	// int arr[] = {54, 5, 3, 6, 2, 10, 14};
+	// int n = 7;
+
+	// printNextGreater(arr, n);
+
+	int arr[] = {100, 80, 60, 70, 60, 75, 85};
 	int n = 7;
 
-	printNextGreater(arr, n);
+	stockSpan(arr, n);
 
 	return 0;
 }
