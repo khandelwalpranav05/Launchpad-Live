@@ -65,6 +65,29 @@ bool isDuplicate(string str) {
 
 void printNextGreater(int arr[], int n) {
 
+	stack<int> s;
+
+	for (int i = 0; i < n; i++) {
+
+		while (!s.empty() and s.top() < arr[i]) {
+			int val = s.top();
+			s.pop();
+
+			cout << val << " -> " << arr[i] << endl;
+		}
+
+		// my work is done
+		// then just add me to the stack
+		s.push(arr[i]);
+	}
+
+	while (!s.empty()) {
+		int val = s.top();
+		s.pop();
+
+		cout << val << " -> -1" << endl;
+	}
+
 }
 
 int main() {
@@ -77,8 +100,8 @@ int main() {
 	// cout << isDuplicate("((a+b))") << endl; // true
 	// cout << isDuplicate("((a+b) + (c))") << endl; // false;
 
-	int arr[] = {5, 3, 6, 2, 10, 4};
-	int n = 6;
+	int arr[] = {54, 5, 3, 6, 2, 10, 14};
+	int n = 7;
 
 	printNextGreater(arr, n);
 
