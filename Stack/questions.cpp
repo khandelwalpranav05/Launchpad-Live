@@ -39,14 +39,48 @@ bool isBalanced(string str) {
 
 bool isDuplicate(string str) {
 
+	stack<char> s;
+
+	for (int i = 0; i < str.length(); i++) {
+
+		char ch = str[i];
+
+		if (ch != ')') {
+			s.push(ch);
+		} else {
+
+			if (s.top() == '(') {
+				return true;
+			}
+
+			while (s.top() != '(') {
+				s.pop();
+			}
+			s.pop();
+		}
+	}
+
+	return false;
+}
+
+void printNextGreater(int arr[], int n) {
+
 }
 
 int main() {
 
-	cout << isBalanced("((()))(") << endl; // false
-	cout << isBalanced("(())()") << endl; // true
-	cout << isBalanced("((())") << endl; // false
-	cout << isBalanced("()()()") << endl; // true
+	// cout << isBalanced("((()))(") << endl; // false
+	// cout << isBalanced("(())()") << endl; // true
+	// cout << isBalanced("((())") << endl; // false
+	// cout << isBalanced("()()()") << endl; // true
+
+	// cout << isDuplicate("((a+b))") << endl; // true
+	// cout << isDuplicate("((a+b) + (c))") << endl; // false;
+
+	int arr[] = {5, 3, 6, 2, 10, 4};
+	int n = 6;
+
+	printNextGreater(arr, n);
 
 	return 0;
 }
