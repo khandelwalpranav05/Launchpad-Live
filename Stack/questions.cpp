@@ -112,6 +112,111 @@ void stockSpan(int arr[], int n) {
 	}
 }
 
+void nextSmaller(int arr[], int n) {
+
+	int ans[n];
+
+	stack<int> s;
+
+	for (int i = 0; i < n; i++) {
+
+		while (!s.empty() and arr[s.top()] > arr[i]) {
+			int idx = s.top();
+			s.pop();
+
+			ans[idx] = arr[i]; // assigning my value as next smaller to the
+			// index of current element
+		}
+		s.push(i);
+	}
+
+	while (!s.empty()) {
+		int idx = s.top();
+		s.pop();
+
+		ans[idx] = -1;
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << ans[i] << " ";
+	}
+	cout << endl;
+}
+
+int histogramArea(int arr[], int n) {
+
+	stack<int> s;
+
+	int maxArea = 0;
+
+	int i = 0;
+
+	while (i < n) {
+
+		if (s.empty() or arr[s.top()] <= arr[i]) {
+			s.push(i);
+			i++;
+		} else {
+
+			// if you're here means your ith index value is acting as a
+			// next smaller for the current stack top element
+
+			int extractTop = s.top();
+			s.pop();
+
+			int height = arr[extractTop];
+
+			int nextSmallerIndex = i;
+
+			int currArea;
+
+			if (s.empty()) {
+				int width = nextSmallerIndex;
+				currArea = width * height;
+			} else {
+				int prevSmallerIndex = s.top();
+				int width = nextSmallerIndex - prevSmallerIndex - 1;
+
+				currArea = width * height;
+			}
+
+			maxArea = max(maxArea, currArea);
+		}
+	}
+
+
+	// now when your i reaches to the last index(n)
+	// now you will consider the nth bar as a 0 height bar
+	// so that it could act as next smaller element for the
+	// remaining values in my stack
+
+	while (!s.empty()) {
+
+		int extractTop = s.top();
+		s.pop();
+
+		int height = arr[extractTop];
+
+		int nextSmallerIndex = i;
+
+		int currArea;
+
+		if (s.empty()) {
+			int width = nextSmallerIndex;
+			currArea = width * height;
+		} else {
+			int prevSmallerIndex = s.top();
+			int width = nextSmallerIndex - prevSmallerIndex - 1;
+
+			currArea = width * height;
+		}
+
+		maxArea = max(maxArea, currArea);
+	}
+
+	return maxArea;
+}
+
 int main() {
 
 	// cout << isBalanced("((()))(") << endl; // false
@@ -127,10 +232,20 @@ int main() {
 
 	// printNextGreater(arr, n);
 
-	int arr[] = {100, 80, 60, 70, 60, 75, 85};
+	// int arr[] = {100, 80, 60, 70, 60, 75, 85};
+	// int n = 7;
+
+	// stockSpan(arr, n);
+
+	// int arr[] = {2, 3, 1, 4, 6, 5, 0};
+	// int n = 7;
+
+	// nextSmaller(arr, n);
+
+	int arr[] = {6, 2, 5, 4, 5, 1, 6};
 	int n = 7;
 
-	stockSpan(arr, n);
+	cout << histogramArea(arr, n) << endl;
 
 	return 0;
 }
