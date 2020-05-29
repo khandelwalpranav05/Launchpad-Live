@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stack>
+#include <queue>
+#include <deque>
 
 using namespace std;
 
@@ -217,6 +219,86 @@ int histogramArea(int arr[], int n) {
 	return maxArea;
 }
 
+void printFirstNonRepeatingCharacters() {
+
+	queue<char> q;
+	int freq[256] = {0};
+
+	char data;
+	cin >> data;
+
+	while (data != '.') {
+
+		// push in queue and add the freq
+		q.push(data);
+		freq[data] += 1;
+
+		while (!q.empty()) {
+
+			char firstOption = q.front();
+
+			if (freq[firstOption] > 1) {
+				q.pop();
+			} else {
+				cout << firstOption << " ";
+				break;
+			}
+		}
+
+		// if you're here either you break the loop (break;)  or queue got empty
+		// if you're queue is empty then you have to handle the situation
+
+		if (q.empty()) {
+			cout << "-1 ";
+		}
+
+		cin >> data;
+	}
+}
+
+void maximumSlidingWindow(int arr[], int n, int k) {
+
+	deque<int> q;
+
+	for (int i = 0; i < k; i++) {
+
+		while (!q.empty() and arr[q.back()] <= arr[i]) {
+			q.pop_back();
+		}
+		q.push_back(i);
+	}
+
+	for (int i = k; i < n; i++) {
+		cout << arr[q.front()] << " ";
+
+		if (!q.empty() and q.front() <= i - k) {
+			q.pop_front();
+		}
+
+		while (!q.empty() and arr[q.back()] <= arr[i]) {
+			q.pop_back();
+		}
+		q.push_back(i);
+	}
+
+}
+
+bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+	stack<int> s;
+	int popIdx = 0;
+
+	for (int val : pushed) {
+		s.push(val);
+
+		while (!s.empty() and s.top() == popped[popIdx]) {
+			s.pop();
+			popIdx++;
+		}
+	}
+
+	return s.empty();
+}
+
 int main() {
 
 	// cout << isBalanced("((()))(") << endl; // false
@@ -242,10 +324,17 @@ int main() {
 
 	// nextSmaller(arr, n);
 
-	int arr[] = {6, 2, 5, 4, 5, 1, 6};
-	int n = 7;
+	// int arr[] = {6, 2, 5, 4, 5, 1, 6};
+	// int n = 7;
+	// cout << histogramArea(arr, n) << endl;
 
-	cout << histogramArea(arr, n) << endl;
+	// printFirstNonRepeatingCharacters();
+
+	int arr[] = {1, 3, 2, 0, -1, 5, 2};
+	int n = 7;
+	int k = 3;
+
+	maximumSlidingWindow(arr, n, k);
 
 	return 0;
 }
