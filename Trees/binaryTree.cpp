@@ -47,7 +47,14 @@ TreeNode* builtTree(TreeNode* root) {
 	return root;
 }
 
+// if there are n nodes in my tree
+
+// Time: O(n)
+// Space: O(n)
+
+int check = 0;
 void preOrder(TreeNode* root) {
+	check++;
 	if (root == NULL) {
 		return;
 	}
@@ -58,6 +65,8 @@ void preOrder(TreeNode* root) {
 	preOrder(root->right);
 }
 
+// Time: O(n)
+// Space: O(n)
 void inOrder(TreeNode* root) {
 	// BASE CASE
 	if (root == NULL) {
@@ -71,6 +80,8 @@ void inOrder(TreeNode* root) {
 
 // in a tree problem you are just given a root node
 
+// Time: O(n)
+// Space: O(n)
 int countNodes(TreeNode* root) {
 	//BASE CASE
 	if (root == NULL) {
@@ -85,6 +96,8 @@ int countNodes(TreeNode* root) {
 }
 
 // Postorder (L R N)
+// Time: O(n)
+// Space: O(n)
 void postOrder(TreeNode* root) {
 	if (root == NULL) {
 		return;
@@ -96,6 +109,8 @@ void postOrder(TreeNode* root) {
 }
 
 // sum of all nodes
+// Time: O(n)
+// Space: O(n)
 int sumOfNodes(TreeNode* root) {
 	if (root == NULL) {
 		return 0;
@@ -109,6 +124,8 @@ int sumOfNodes(TreeNode* root) {
 }
 
 // search if a key exist in the tree or not
+// Time: O(n)
+// Space: O(n)
 bool search(TreeNode* root, int key) {
 	if (root == NULL) {
 		return false;
@@ -128,9 +145,41 @@ bool search(TreeNode* root, int key) {
 	return leftSearch or rightSearch;
 }
 
+// Time: O(n)
+// Space: O(n)
 int height(TreeNode* root) {
+	//BASE CASE
+	if (root == NULL) {
+		return -1;
+	}
 
+	int leftHeight = height(root->left);
+	int rightHeight = height(root->right);
+
+	int totalHeight = max(leftHeight, rightHeight) + 1;
+	return totalHeight;
 }
+
+
+// Time: O(n^2)
+int diameterOfBinaryTree(TreeNode* root) {
+	if (root == NULL) {
+		return 0;
+	}
+
+	int leftDiameter = diameterOfBinaryTree(root->left);
+	int rightDiameter = diameterOfBinaryTree(root->right);
+
+	int leftHeight = height(root->left) + 1;
+	int rightHeight = height(root->right) + 1;
+
+	int myDiameter = leftHeight + rightHeight;
+
+	int maxDiameter = max(myDiameter, max(leftDiameter, rightDiameter));
+
+	return maxDiameter;
+}
+
 
 int main() {
 
@@ -156,6 +205,12 @@ int main() {
 	// 	cout << "Not Found!" << endl;
 	// }
 
+	// cout << "Height of the tree is " << height(root) << endl;
+
+
+	// preOrder(root);
+	// cout << endl << "**************" << endl;
+	// cout << check << endl;
 
 	return 0;
 }
