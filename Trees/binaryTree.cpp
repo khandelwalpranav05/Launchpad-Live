@@ -86,16 +86,49 @@ int countNodes(TreeNode* root) {
 
 // Postorder (L R N)
 void postOrder(TreeNode* root) {
+	if (root == NULL) {
+		return;
+	}
 
+	postOrder(root->left);
+	postOrder(root->right);
+	cout << root->val << " ";
 }
 
 // sum of all nodes
 int sumOfNodes(TreeNode* root) {
+	if (root == NULL) {
+		return 0;
+	}
 
+	int leftSum = sumOfNodes(root->left);
+	int rightSum = sumOfNodes(root->right);
+
+	int totalSum = leftSum + root->val + rightSum;
+	return totalSum;
 }
 
-// search
+// search if a key exist in the tree or not
 bool search(TreeNode* root, int key) {
+	if (root == NULL) {
+		return false;
+	}
+
+	if (root->val == key) {
+		return true;
+	}
+
+	bool leftSearch = search(root->left, key);
+	bool rightSearch = search(root->right, key);
+
+	// if (leftSearch or rightSearch) {
+	// 	return true;
+	// }
+	// return false;
+	return leftSearch or rightSearch;
+}
+
+int height(TreeNode* root) {
 
 }
 
@@ -112,7 +145,17 @@ int main() {
 	// inOrder(root);
 	// cout << endl;
 
-	cout << "Total number of nodes " << countNodes(root) << endl;
+	// cout << "Total number of nodes " << countNodes(root) << endl;
+
+	// cout << "Sum of nodes " << sumOfNodes(root) << endl;
+
+	// int key = 4;
+	// if (search(root, key)) {
+	// 	cout << "Found The Key!" << endl;
+	// } else {
+	// 	cout << "Not Found!" << endl;
+	// }
+
 
 	return 0;
 }
