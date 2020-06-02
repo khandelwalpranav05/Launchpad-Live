@@ -170,8 +170,8 @@ int diameterOfBinaryTree(TreeNode* root) {
 	int leftDiameter = diameterOfBinaryTree(root->left);
 	int rightDiameter = diameterOfBinaryTree(root->right);
 
-	int leftHeight = height(root->left) + 1;
-	int rightHeight = height(root->right) + 1;
+	int leftHeight = height(root->left) + 1; // O(n)
+	int rightHeight = height(root->right) + 1; // O(n)
 
 	int myDiameter = leftHeight + rightHeight;
 
@@ -180,6 +180,48 @@ int diameterOfBinaryTree(TreeNode* root) {
 	return maxDiameter;
 }
 
+class DiaHeight {
+public:
+	int diameter;
+	int height;
+};
+
+DiaHeight diameterOptimized(TreeNode* root) {
+	DiaHeight val;
+	if (root == NULL) {
+		val.diameter = 0;
+		val.height = -1;
+
+		return val;
+	}
+
+	// update the height and diameter of val object and then return
+
+	DiaHeight leftPair = diameterOptimized(root->left);
+	DiaHeight rightPair = diameterOptimized(root->right);
+
+	int leftDiameter = leftPair.diameter;
+	int rightDiameter = rightPair.diameter;
+
+	int leftHeight = leftPair.height;
+	int rightHeight = rightPair.height;
+
+	int myDiameter = leftHeight + 2 + rightHeight;
+
+	int maxDiameter = max(myDiameter, max(leftDiameter, rightDiameter));
+	val.diameter = maxDiameter;
+
+	val.height = max(leftHeight, rightHeight) + 1;
+	return val;
+}
+
+// int func() {
+
+// 	int a = 5;
+// 	return a;
+// 	OR
+// 	return 5;
+// }
 
 int main() {
 
