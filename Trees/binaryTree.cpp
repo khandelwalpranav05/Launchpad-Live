@@ -186,6 +186,7 @@ public:
 	int height;
 };
 
+// Time: O(n)
 DiaHeight diameterOptimized(TreeNode* root) {
 	DiaHeight val;
 	if (root == NULL) {
@@ -213,6 +214,113 @@ DiaHeight diameterOptimized(TreeNode* root) {
 
 	val.height = max(leftHeight, rightHeight) + 1;
 	return val;
+}
+
+
+// Time: O(n^2)
+bool heightBalanced(TreeNode* root) {
+	if (root == NULL) {
+		return true;
+	}
+
+	bool leftBalance = heightBalanced(root->left);
+	bool rightBalance = heightBalanced(root->right);
+
+	if (leftBalance == false or rightBalance == false) {
+		return false;
+	}
+
+	// if you're here that means
+	// both my left subtree and right subtree are balanced
+
+	int leftHeight = height(root->left);
+	int rightHeight = height(root->right);
+
+	int diff = abs(leftHeight - rightHeight);
+
+	if (diff > 1) {
+		return false;
+	}
+	return true;
+}
+
+void display(vector<int> v) {
+	for (int i = 0; i < v.size(); i++) {
+		cout << v[i] << " -> ";
+	}
+	cout << endl;
+}
+
+void printRootToLeaf(TreeNode* root, vector<int> ans) {
+	if (root == NULL) {
+		return;
+	}
+
+	ans.push_back(root->val);
+
+	if (root->left == NULL and root->right == NULL) {
+		display(ans);
+		return;
+	}
+
+	printRootToLeaf(root->left, ans);
+	printRootToLeaf(root->right, ans);
+}
+
+// Time: O(n)
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+	if (root == NULL) {
+		return NULL;
+	}
+
+	if (root == p or root == q) {
+		return root;
+	}
+
+	TreeNode* leftLCA = lowestCommonAncestor(root->left, p, q);
+	TreeNode* rightLCA = lowestCommonAncestor(root->right, p, q);
+
+	if (leftLCA == NULL and rightLCA == NULL) {
+		return NULL;
+	}
+
+	if (leftLCA != NULL and rightLCA != NULL) {
+		return root;
+	}
+
+	// either my leftLCA is null or my rightLCA is null
+	if (leftLCA == NULL) {
+		return rightLCA;
+	} else {
+		return leftLCA;
+	}
+}
+
+int helper(TreeNode* root, int &maxValue) {
+	if (root == NULL) {
+		return 0;
+	}
+
+	int leftMax = helper(root->left, maxValue);
+	int rightMax = helper(root->right, maxValue);
+
+	leftMax = max(leftMax, 0);
+	rightMax = max(rightMax, 0);
+
+	int maxPathSumPassingThroughMe = leftMax + root->val + rightMax;
+
+	maxValue = max(maxValue, maxPathSumPassingThroughMe);
+
+	int pathReturnedToParent = max(leftMax + root->val, rightMax + root->val);
+	return pathReturnedToParent;
+}
+
+int maxPathSum(TreeNode* root) {
+	int maxValue = INT_MIN;
+
+	helper(root, maxValue);
+
+	return maxValue;
 }
 
 // int func() {
@@ -249,10 +357,17 @@ int main() {
 
 	// cout << "Height of the tree is " << height(root) << endl;
 
-
 	// preOrder(root);
 	// cout << endl << "**************" << endl;
 	// cout << check << endl;
+
+	// if (heightBalanced(root)) {
+	// 	cout << "Balanced !" << endl;
+	// } else {
+	// 	cout << "Not Balanced" << endl;
+	// }
+	vector<int> temp;
+	printRootToLeaf(root, temp);
 
 	return 0;
 }
