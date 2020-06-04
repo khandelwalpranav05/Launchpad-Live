@@ -244,6 +244,43 @@ bool heightBalanced(TreeNode* root) {
 	return true;
 }
 
+pair<bool, int> heightBalancedOptimized(TreeNode* root) {
+	pair<bool, int> val; // object that will be eventually returned by the function
+
+	if (root == NULL) {
+		val.first = true;
+		val.second = -1;
+		return val;
+	}
+
+	pair<bool, int> leftPair = heightBalancedOptimized(root->left);
+	pair<bool, int> rightPair = heightBalancedOptimized(root->right);
+
+	bool leftBalance = leftPair.first;
+	bool rightBalance = rightPair.first;
+
+	int leftHeight = leftPair.second;
+	int rightHeight = rightPair.second;
+
+	int myHeight = max(leftHeight, rightHeight) + 1;
+	val.second = myHeight;
+
+	if (leftBalance == false or rightBalance == false) {
+		val.first = false;
+		return val;
+	}
+
+	int diff = abs(leftHeight - rightHeight);
+
+	if (diff > 1) {
+		val.first = false;
+	} else {
+		val.first = true;
+	}
+
+	return val;
+}
+
 void display(vector<int> v) {
 	for (int i = 0; i < v.size(); i++) {
 		cout << v[i] << " -> ";
