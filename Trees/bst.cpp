@@ -77,7 +77,26 @@ void preOrder(TreeNode* root) {
 	preOrder(root->right);
 }
 
+// Time: O(h) -> O(n)
 bool searchInBST(TreeNode* root, int key) {
+	if (root == NULL) {
+		return false;
+	}
+
+	if (root->val == key) {
+		return true;
+	}
+
+	if (key > root->val) {
+		// then my answert lies in the right subtree
+		return searchInBST(root->right, key);
+	} else {
+		// my answert lies in the left subtree
+		return searchInBST(root->left, key);
+	}
+}
+
+bool isBST(TreeNode* root) {
 
 }
 
