@@ -28,6 +28,27 @@ public:
 	}
 };
 
+// for building all trees bt as well as bst
+TreeNode* builtTree(TreeNode* root) {
+	int data;
+	cin >> data;
+
+	if (data == -1) {
+		return NULL;
+	}
+
+	// if the data is not -1
+	if (root == NULL) {
+		root = new TreeNode(data);
+	}
+
+	root->left =  builtTree(root->left); // will return me the address of my leftchild node
+	root->right =  builtTree(root->right); // will return me the adress of rightchild node
+
+	return root;
+}
+
+// for only building bst
 TreeNode* builtBST(TreeNode* root, int data) {
 	if (root == NULL) {
 		root = new TreeNode(data);
@@ -96,14 +117,103 @@ bool searchInBST(TreeNode* root, int key) {
 	}
 }
 
-bool isBST(TreeNode* root) {
+bool isBST(TreeNode* root, int minRange = INT_MIN, int maxRange = INT_MAX) {
+	if (root == NULL) {
+		return true;
+	}
 
+	bool leftBST = isBST(root->left, minRange, root->val);
+	bool rightBST = isBST(root->right, root->val, maxRange);
+
+	if (leftBST and rightBST and root->val > minRange and root->val < maxRange) {
+		return true;
+	}
+
+	return false;
+}
+
+class TreeDetail {
+public:
+	bool bst;
+	int size;
+	int minValue;
+	int maxValue;
+};
+
+TreeDetail largestBSTinBinaryTree(TreeNode* root) {
+	TreeDetail val; // object that will be returned by the function
+
+	if (root == NULL) {
+		val.bst = true;
+		val.size = 0;
+		val.minValue = INT_MAX;
+		val.maxValue = INT_MIN;
+		return val;
+	}
+
+	TreeDetail leftDetail = largestBSTinBinaryTree(root->left);
+	TreeDetail rightDetail = largestBSTinBinaryTree(root->right);
+
+	// leftBST and rightBST and root value > maxValue on left and root < minValue on right
+	if (leftDetail.bst == false or rightDetail.bst == false or root->val > rightDetail.minValue or root->val < leftDetail.maxValue) {
+		// I'm not a bst
+		val.bst = false;
+		val.size = max(leftDetail.size, rightDetail.size);
+		return val;
+	}
+
+	// if i'm here that means I am a BST
+	val.bst = true;
+	val.size = leftDetail.size + rightDetail.size + 1;
+
+	// before returning I've to update my minValue as well as maxValue
+
+	int myMinValue;
+	if (root->left == NULL) {
+		myMinValue = root->val;
+	} else {
+		myMinValue = leftDetail.minValue;
+	}
+
+	int myMaxValue;
+	if (root->right == NULL) {
+		myMaxValue = root->val;
+	} else {
+		myMaxValue = rightDetail.maxValue;
+	}
+
+	val.minValue = myMinValue;
+
+	val.maxValue = myMaxValue;
+
+	return val;
+}
+
+void kthSmallestHelper(TreeNode* root, int &k, int &ans) {
+	if (root == NULL) return;
+
+	kthSmallestHelper(root->left, k, ans);
+
+	// instead of printing
+	k--;
+	if (k == 0) {
+		ans = root->val;
+	}
+
+	kthSmallestHelper(root->right, k, ans);
+}
+
+int kthSmallest(TreeNode* root, int k) {
+	int ans;
+	kthSmallestHelper(root, k, ans);
+
+	return ans;
 }
 
 int main() {
 
-	TreeNode* root = NULL;
-	root = insert(root);
+	// TreeNode* root = NULL;
+	// root = insert(root);
 
 	// cout << "********* INORDER *******" << endl;
 	// inOrder(root);
@@ -113,8 +223,21 @@ int main() {
 	// preOrder(root);
 	// cout << endl;
 
+	// cout << isBST(root) << endl;
+
+	cout << "Largest BST in a BT" << endl;
+	TreeNode* root = NULL;
+	root = builtTree(root);
+
+	TreeDetail val = largestBSTinBinaryTree(root);
+
+	cout << " Size is " << val.size << endl; // 7
+
 	return 0;
 }
 
 // Input Tree
 // 8 5 7 6 3 12 10 14 -1
+
+// Input for largest bst in a bt
+// 8 4 2 1 -1 -1 3 -1 -1 6 5 -1 -1 7 -1 -1 9 7 -1 -1 10 -1 -1
