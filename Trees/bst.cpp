@@ -210,6 +210,38 @@ int kthSmallest(TreeNode* root, int k) {
 	return ans;
 }
 
+int preOrderIndex = 0;
+TreeNode* builtTreeFromPreorderInorder(int pre[], int in[], int start, int end) {
+	// base CASE
+	if (start > end) {
+		return NULL;
+	}
+
+	int data = pre[preOrderIndex];
+	TreeNode* root = new TreeNode(data);
+
+	int mid;
+
+	for (int i = start; i <= end; i++) {
+		if (in[i] == data) {
+			mid = i;
+			break;
+		}
+	}
+
+	preOrderIndex++;
+
+	root->left = builtTreeFromPreorderInorder(pre, in, start, mid - 1);
+	root->right = builtTreeFromPreorderInorder(pre, in, mid + 1, end);
+
+	return root;
+}
+
+// generate the preorder orientation with null values included
+void serialize(TreeNode* root) {
+
+}
+
 int main() {
 
 	// TreeNode* root = NULL;
@@ -225,13 +257,19 @@ int main() {
 
 	// cout << isBST(root) << endl;
 
-	cout << "Largest BST in a BT" << endl;
-	TreeNode* root = NULL;
-	root = builtTree(root);
+	// cout << "Largest BST in a BT" << endl;
+	// TreeNode* root = NULL;
+	// root = builtTree(root);
 
-	TreeDetail val = largestBSTinBinaryTree(root);
+	// TreeDetail val = largestBSTinBinaryTree(root);
 
-	cout << " Size is " << val.size << endl; // 7
+	// cout << " Size is " << val.size << endl; // 7
+
+	int pre[] = {4, 2, 1, 3, 5, 8, 7};
+	int in[] = {1, 2, 3, 4, 8, 5, 7};
+	int n = 7;
+
+
 
 	return 0;
 }

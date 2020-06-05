@@ -368,6 +368,38 @@ int maxPathSum(TreeNode* root) {
 // 	return 5;
 // }
 
+int preOrderIndex = 0;
+TreeNode* builtTreeFromPreorderInorder(int pre[], int in[], int start, int end) {
+	// base CASE
+	if (start > end) {
+		return NULL;
+	}
+
+	int data = pre[preOrderIndex];
+	TreeNode* root = new TreeNode(data);
+
+	int mid;
+
+	for (int i = start; i <= end; i++) {
+		if (in[i] == data) {
+			mid = i;
+			break;
+		}
+	}
+
+	preOrderIndex++;
+
+	root->left = builtTreeFromPreorderInorder(pre, in, start, mid - 1);
+	root->right = builtTreeFromPreorderInorder(pre, in, mid + 1, end);
+
+	return root;
+}
+
+// generate the preorder orientation with null values included
+void serialize(TreeNode* root) {
+
+}
+
 int main() {
 
 	TreeNode* root = NULL;
