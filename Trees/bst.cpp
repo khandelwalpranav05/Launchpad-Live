@@ -210,42 +210,79 @@ int kthSmallest(TreeNode* root, int k) {
 	return ans;
 }
 
-int preOrderIndex = 0;
-TreeNode* builtTreeFromPreorderInorder(int pre[], int in[], int start, int end) {
-	// base CASE
-	if (start > end) {
-		return NULL;
+class LinkedListPair {
+public:
+	TreeNode* head;
+	TreeNode* tail;
+};
+
+LinkedListPair BSTLinkedList(TreeNode* root) {
+	LinkedListPair val; // object returned by the function
+
+	if (root == NULL) {
+		val.head = NULL;
+		val.tail = NULL;
+		return val;
 	}
 
-	int data = pre[preOrderIndex];
-	TreeNode* root = new TreeNode(data);
+	if (root->left == NULL and root->right == NULL) {
+		val.head = root;
+		val.tail = root;
+		return val;
 
-	int mid;
+	} else if (root->left != NULL and root->right == NULL) {
 
-	for (int i = start; i <= end; i++) {
-		if (in[i] == data) {
-			mid = i;
-			break;
-		}
+		LinkedListPair leftPair = BSTLinkedList(root->left);
+
+		leftPair.tail->right = root;
+		val.head = leftPair.head;
+		val.tail = root;
+		return val;
+	} else if (root->left == NULL and root->right != NULL) {
+
+		LinkedListPair rightPair = BSTLinkedList(root->right);
+
+		root->right = rightPair.head;
+		val.head = root;
+		val.tail = rightPair.tail;
+		return val;
+	} else {
+
+		LinkedListPair leftPair = BSTLinkedList(root->left);
+		LinkedListPair rightPair = BSTLinkedList(root->right);
+
+		leftPair.tail->right = root;
+		root->right = rightPair.head;
+
+		val.head = leftPair.head;
+		val.tail = rightPair.tail;
+		return val;
 	}
-
-	preOrderIndex++;
-
-	root->left = builtTreeFromPreorderInorder(pre, in, start, mid - 1);
-	root->right = builtTreeFromPreorderInorder(pre, in, mid + 1, end);
-
-	return root;
 }
 
-// generate the preorder orientation with null values included
-void serialize(TreeNode* root) {
+int numTrees(int n) {
+	// BASE CASE
+	if (n == 0 or n == 1) {
+		return 1;
+	}
 
+	int ans = 0;
+
+	for (int i = 1; i <= n; i++) {
+		int leftBSTCount = numTrees(i - 1);
+		int rightBSTCount = numTrees(n - i);
+
+		int myCount = leftBSTCount * rightBSTCount;
+		ans += myCount;
+	}
+
+	return ans;
 }
 
 int main() {
 
-	// TreeNode* root = NULL;
-	// root = insert(root);
+	TreeNode* root = NULL;
+	root = insert(root);
 
 	// cout << "********* INORDER *******" << endl;
 	// inOrder(root);
@@ -265,11 +302,18 @@ int main() {
 
 	// cout << " Size is " << val.size << endl; // 7
 
-	int pre[] = {4, 2, 1, 3, 5, 8, 7};
-	int in[] = {1, 2, 3, 4, 8, 5, 7};
-	int n = 7;
+	// int pre[] = {4, 2, 1, 3, 5, 8, 7};
+	// int in[] = {1, 2, 3, 4, 8, 5, 7};
+	// int n = 7;
 
+	LinkedListPair val = BSTLinkedList(root);
 
+	TreeNode* temp = val.head;
+	while (temp != NULL) {
+		cout << temp->val << " -> ";
+		temp = temp->right;
+	}
+	cout << endl;
 
 	return 0;
 }

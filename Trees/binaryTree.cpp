@@ -397,7 +397,66 @@ TreeNode* builtTreeFromPreorderInorder(int pre[], int in[], int start, int end) 
 
 // generate the preorder orientation with null values included
 void serialize(TreeNode* root) {
+	if (root == NULL) {
+		cout << "-1 ";
+		return;
+	}
 
+	cout << root->val << " ";
+	serialize(root->left);
+	serialize(root->right);
+}
+
+void levelOrder(TreeNode* root) {
+	queue<TreeNode*> q;
+	q.push(root);
+
+	while (!q.empty()) {
+
+		TreeNode* node = q.front();
+		q.pop();
+
+		cout << node->val << " ";
+
+		if (node->left != NULL) {
+			q.push(node->left);
+		}
+
+		if (node->right != NULL) {
+			q.push(node->right);
+		}
+	}
+
+	cout << endl;
+}
+
+void levelOrderNewLine(TreeNode* root) {
+
+	queue<TreeNode*> q;
+	q.push(root);
+
+	while (!q.empty()) {
+
+		int len = q.size();
+		// 4 5 3
+		// this for loop traverse a whole level at once
+		for (int i = 0; i < len; i++) {
+
+			TreeNode* node = q.front();
+			q.pop();
+
+			cout << node->val << " ";
+
+			if (node->left != NULL) {
+				q.push(node->left);
+			}
+
+			if (node->right != NULL) {
+				q.push(node->right);
+			}
+		}
+		cout << endl;
+	}
 }
 
 int main() {
@@ -435,8 +494,16 @@ int main() {
 	// } else {
 	// 	cout << "Not Balanced" << endl;
 	// }
-	vector<int> temp;
-	printRootToLeaf(root, temp);
+	// vector<int> temp;
+	// printRootToLeaf(root, temp);
+
+	// cout << "After Serialization ***********" << endl;
+	// serialize(root);
+	// cout << endl;
+
+	cout << "Level Order ************" << endl;
+	levelOrderNewLine(root);
+
 
 	return 0;
 }
