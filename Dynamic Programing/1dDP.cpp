@@ -193,6 +193,241 @@ int countBoardPathPUREDP(int start, int end) {
 	return dp[start];
 }
 
+int perfectSquare(int n, vector<int> &dp) {
+	//BASE CASE
+	if (n == 0) {
+		dp[0] = 0;
+		return 0;
+	}
+
+	if (dp[n] != -1) {
+		return dp[n];
+	}
+
+	// RECURSIVE CASE
+	int minValue = INT_MAX;
+
+	for (int i = 1; i * i <= n; i++) {
+		int minPerfectSquareSubproblem = perfectSquare(n - i * i, dp);
+		minValue = min(minValue, minPerfectSquareSubproblem);
+	}
+
+	minValue += 1;
+
+	dp[n] = minValue;
+
+	for (int i = 0; i <= 12; i++) {
+		cout << dp[i] << "\t";
+	}
+	cout << endl << "************************" << endl;
+
+	return minValue;
+}
+
+int numSquaresMemo(int n) {
+	vector<int> dp(n + 1, -1);
+
+	return perfectSquare(n, dp);
+}
+
+int numSquaresPUREDP(int n) {
+
+	vector<int> dp(n + 1);
+
+	// BASE CASE
+	dp[0] = 0;
+
+	for (int problem = 1; problem <= n; problem++) {
+
+		int minValue = INT_MAX;
+
+		for (int i = 1; i * i <= problem; i++) {
+			int minPerfectSquareSubproblem = dp[problem - i * i];
+			minValue = min(minValue, minPerfectSquareSubproblem + 1);
+		}
+
+		dp[problem] = minValue;
+	}
+
+	return dp[n];
+}
+
+int robMemo(int si, vector<int> &nums, vector<int> &dp) {
+	// BASE CASE
+	if (si >= nums.size()) {
+		return 0;
+	}
+
+	if (dp[si] != -1) {
+		return dp[si];
+	}
+
+	// RECURSIVE CASE
+	int include = robMemo(si + 2, nums, dp) + nums[si];
+	int skip = robMemo(si + 1, nums, dp);
+
+	int result = max(include, skip);
+
+	dp[si] = result;
+
+	for (int i = 0; i <= nums.size(); i++) {
+		cout << dp[i] << "\t";
+	}
+	cout << endl << "************************" << endl;
+
+	return result;
+}
+
+int rob(vector<int>& nums) {
+	int n = nums.size();
+
+	vector<int> dp(n + 2, -1);
+	return robMemo(0, nums, dp);
+}
+
+int robPUREDP(vector<int>& nums) {
+	int n = nums.size();
+
+	vector<int> dp(n + 2);
+
+	//BASE CASE
+	dp[n + 1] = 0;
+	dp[n] = 0;
+
+	for (int si = n - 1; si >= 0; si--) {
+		// RECURISVE CASE
+
+		int include = nums[si] + dp[si + 2];
+		int skip = dp[si + 1];
+
+		int result = max(include, skip);
+
+		dp[si] = result;
+	}
+
+	return dp[0];
+}
+
+int numTreesMemo(int n, vector<int> &dp) {
+	if (n == 0 or n == 1) {
+		dp[n] = 1;
+		return 1;
+	}
+
+	if (dp[n] != -1) {
+		return dp[n];
+	}
+
+	int ans = 0;
+
+	for (int i = 1; i <= n; i++) {
+
+		int leftCount = numTreesMemo(i - 1, dp);
+		int rightCount = numTreesMemo(n - i, dp);
+
+		int myCountAsARootNode = leftCount * rightCount;
+		ans += myCountAsARootNode;
+	}
+
+	dp[n] = ans;
+
+	for (int i = 0; i <= 4; i++) {
+		cout << dp[i] << "\t";
+	}
+	cout << endl << "************************" << endl;
+
+	return ans;
+}
+
+
+int numTrees(int n) {
+	vector<int> dp(n + 1, -1);
+
+	return numTreesMemo(n, dp);
+}
+
+
+int numTreesPUREDP(int n) {
+	vector<int> dp(n + 1, -1);
+
+	// BASE CASE
+	dp[0] = 1;
+	dp[1] = 1;
+
+	for (int problem = 2; problem <= n; problem++) {
+
+		// RECURSIVE CASE
+		int ans = 0;
+
+		for (int i = 1; i <= problem; i++) {
+			int leftCount = dp[i - 1];
+			int rightCount = dp[problem - i];
+
+			int myCountAsARootNode = leftCount * rightCount;
+			ans += myCountAsARootNode;
+		}
+
+		dp[problem] = ans;
+	}
+
+	return dp[n];
+}
+
+int lengthOfLIS(vector<int>& nums) {
+	int n = nums.size();
+
+	if (n == 0) {
+		return 0;
+	}
+
+	vector<int> dp(n, 1);
+
+
+	for (int i = 1; i < n; i++) {
+		for (int j = 0; j < i; j++) {
+			if (nums[i] > nums[j]) {
+				dp[i] = max(dp[i], dp[j] + 1);
+			}
+		}
+	}
+
+	int maxLength = 1;
+
+	for (int val : dp) {
+		maxLength = max(maxLength, val);
+	}
+
+	return maxLength;
+}
+
+int lengthOfLIS(vector<int>& nums) {
+	int n = nums.size();
+
+	if (n == 0) {
+		return 0;
+	}
+
+	vector<int> dp(n, 1);
+
+	for (int i = 1; i < n; i++) {
+		for (int j = 0; j < i; j++) {
+			if (nums[i] > nums[j]) {
+				dp[i] = max(dp[i], dp[j] + 1);
+			}
+		}
+
+		// harr baar maximum check karlo
+	}
+
+	int maxLength = 1;
+
+	for (int val : dp) {
+		maxLength = max(maxLength, val);
+	}
+
+	return maxLength;
+}
+
 int main() {
 	// int n = 10;
 
@@ -214,20 +449,27 @@ int main() {
 	// }
 	// cout << endl;
 
-	int start = 0;
-	int end = 10;
+	// int start = 0;
+	// int end = 10;
 
-	cout << countBoardPath(start, end);
+	// cout << countBoardPath(start, end);
 
-	int dp[end + 1];
-	memset(dp, -1, sizeof(dp));
-	cout << countBoardPathMemo(start, end, dp) << endl;
+	// int dp[end + 1];
+	// memset(dp, -1, sizeof(dp));
+	// cout << countBoardPathMemo(start, end, dp) << endl;
 
-	cout << "Number of function call for countBoardPath " << check1 << endl;
-	cout << "Number of function call for countBoardPathMemo " << check2 << endl;
+	// cout << "Number of function call for countBoardPath " << check1 << endl;
+	// cout << "Number of function call for countBoardPathMemo " << check2 << endl;
 
 
 	// cout << countBoardPathPUREDP(start, end) << endl;
+	// int n = 12;
+	// cout << numSquaresMemo(n) << endl;
+
+	// vector<int> v({2, 7, 9, 3, 1});
+	// cout << rob(v) << endl;
+
+	cout << numTrees(4) << endl;
 
 	return 0;
 }
