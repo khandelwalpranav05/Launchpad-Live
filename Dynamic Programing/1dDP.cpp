@@ -428,6 +428,36 @@ int lengthOfLIS(vector<int>& nums) {
 	return maxLength;
 }
 
+int maxEnvelopes(vector<vector<int>>& envelopes) {
+
+	int n = envelopes.size();
+	if (n == 0) {
+		return 0;
+	}
+
+	sort(envelopes.begin(), envelopes.end());
+
+	vector<int> dp(n, 1);
+
+	for (int i = 1; i < n; i++) {
+		for (int j = 0; j < i; j++) {
+
+			if (envelopes[j][0] < envelopes[i][0] and envelopes[j][1] < envelopes[i][1]) {
+				dp[i] = max(dp[i], dp[j] + 1);
+			}
+
+		}
+	}
+
+	int maxValue = 1;
+
+	for (int val : dp) {
+		maxValue = max(val, maxValue);
+	}
+
+	return maxValue;
+}
+
 int main() {
 	// int n = 10;
 
