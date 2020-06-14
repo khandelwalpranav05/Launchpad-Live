@@ -220,11 +220,257 @@ int numDistinctPUREDP(string s, string t) {
 	return dp[0][0];
 }
 
+
+int longestPalindromeSubseqMemo(string &str, int left, int right, vector<vector<int> > &dp) {
+	// BASE CASE
+	if (left == right) {
+		dp[left][right] = 1;
+		return 1;
+	}
+
+	if (left > right) {
+		dp[left][right] = 0;
+		return 0;
+	}
+
+	if (dp[left][right] != -1) {
+		return dp[left][right];
+	}
+
+	// RECURSIVE CASE
+	int result;
+
+	if (str[left] == str[right]) {
+		result = longestPalindromeSubseqMemo(str, left + 1, right - 1, dp) + 2;
+	} else {
+		int first = longestPalindromeSubseqMemo(str, left + 1, right, dp);
+		int second = longestPalindromeSubseqMemo(str, left, right - 1, dp);
+
+		result = max(first, second);
+	}
+
+	dp[left][right] = result;
+
+	for (int i = 0; i < str.length(); i++) {
+		for (int j = 0; j < str.length(); j++) {
+			cout << dp[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "***************************" << endl;
+
+	return result;
+}
+
+// int longestPalindromeSubseq(string s) {
+// 	int n = s.length();
+
+// 	int row = n;
+// 	int col = n;
+
+// 	vector<vector<int> > dp(row, vector<int> (col, -1));
+
+// 	return longestPalindromeSubseqMemo(s, 0, n - 1, dp);
+// }
+
+// int longestPalindromeSubseq(string s) {
+// 	int n = s.length();
+
+// 	int row = n;
+// 	int col = n;
+
+// 	vector<vector<int> > dp(row, vector<int> (col, 0));
+
+// 	// BASE CASE
+// 	for (int i = 0; i < n; i++) {
+// 		dp[i][i] = 1;
+// 	}
+
+// 	for (int right = 1; right <= n - 1; right++) {
+// 		for (int left = right - 1; left >= 0; left--) {
+
+// 			// RECURISVE CASE
+
+// 			int result;
+
+// 			if (s[left] == s[right]) {
+// 				result = dp[left + 1][right - 1] + 2;
+// 			} else {
+// 				int first = dp[left + 1][right];
+// 				int second = dp[left][right - 1];
+
+// 				result = max(first, second);
+// 			}
+
+// 			dp[left][right] = result;
+// 		}
+// 	}
+
+// 	return dp[0][n - 1];
+// }
+
+// int combinationSum4(vector<int>& nums, int target) {
+
+// 	vector<int> dp(target + 1, -1);
+
+// 	return helper(nums, target, dp);
+// }
+
+// int helper(vector<int> &nums, int target, vector<int> &dp) {
+// 	// BASE CASE
+// 	if (target == 0) {
+// 		return 1;
+// 	}
+
+// 	if (dp[target] != -1) {
+// 		return dp[target];
+// 	}
+
+// 	// RECURISVE CASE
+// 	int count = 0;
+
+// 	for (int num : nums) {
+// 		if (num <= target) {
+// 			count += helper(nums, target - num, dp);
+// 		}
+// 	}
+
+// 	dp[target] = count;
+
+// 	return count;
+// }
+
+int knapSack(int si, int weight[], int value[], int capacity, int n, vector<vector<int> > &dp) {
+	if (si == n) {
+		return 0;
+	}
+
+	if (dp[si][capacity] != -1) {
+		return dp[si][capacity];
+	}
+
+	int include = INT_MIN;
+	if (weight[si] <= capacity) {
+		include = value[si] + knapSack(si + 1, weight, value, capacity - weight[si], n, dp);
+	}
+
+	int exclude = knapSack(si + 1, weight, value, capacity, n, dp);
+
+	int result = max(include, exclude);
+
+	dp[si][capacity] = result;
+
+	for (int i = 0; i <= n; i++) {
+		for (int j = 0; j <= 8; j++) {
+			cout << dp[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "****************************" << endl;
+
+	return result;
+}
+
+int knapSackDIFF(int weight[], int value[], int capacity, int n, vector<vector<int> > &dp) {
+	if (n == 0) {
+		return 0;
+	}
+
+	if (dp[n][capacity] != -1) {
+		return dp[n][capacity];
+	}
+
+	int include = INT_MIN;
+	int exclude = INT_MIN;
+
+	if (capacity >= weight[n - 1]) {
+		include = value[n - 1] + knapSackDIFF(weight, value, capacity - weight[n - 1], n - 1, dp);
+	}
+
+	exclude = knapSackDIFF(weight, value, capacity, n - 1, dp);
+
+	int result = max(include, exclude);
+
+	dp[n][capacity] = result;
+
+	for (int i = 0; i <= n; i++) {
+		for (int j = 0; j <= 8; j++) {
+			cout << dp[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "****************************" << endl;
+
+	return result;
+}
+
+int knapSackPUREDP(int weight[], int value[], int capacityLimit, int n) {
+
+	int row = n + 1;
+	int col = capacityLimit + 1;
+	vector<vector<int> > dp(row, vector<int> (col)); // by default initialized with zero
+
+	// BASE CASE
+	for (int i = 0; i <= capacityLimit; i++) {
+		dp[n][i] = 0; // filling the base case of si
+	}
+
+	for (int i = 0; i <= n; i++) {
+		dp[i][0] = 0; // filling the base case of capacity
+	}
+
+
+	for (int si = n - 1; si >= 0; si--) { // rows
+		for (int capacity = 1; capacity <= capacityLimit; capacity++) {
+
+			// RECURSIVE CASE
+
+			int include = INT_MIN;
+			int exclude = INT_MIN;
+
+			if (weight[si] <= capacity) {
+				include = value[si] + dp[si + 1][capacity - weight[si]];
+			}
+
+			exclude = dp[si + 1][capacity];
+
+			int result = max(include, exclude);
+
+			dp[si][capacity] = result;
+		}
+	}
+
+	for (int i = 0; i <= n; i++) {
+		for (int j = 0; j <= capacityLimit; j++) {
+			cout << dp[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << "****************************" << endl;
+
+	return dp[0][capacityLimit];
+}
+
 int main() {
 
 	// cout << longestCommonSubsequence("abcde", "agdxe") << endl;
 
-	cout << numDistinct("bbagg", "bag") << endl;
+	// cout << numDistinct("bbagg", "bag") << endl;
+
+	// cout << longestPalindromeSubseq("bbbab") << endl;
+
+	int value[] = {50, 40, 70, 40};
+	int weight[] = {5, 4, 6, 3};
+	int n = 4;
+	int capacity = 8;
+
+	int row = n + 1; // si range
+	int col = capacity + 1; // capacity
+	//vector<vector<int> > dp(row, vector<int> (col, -1));
+	// cout << knapSack(0, weight, value, capacity, n, dp) << endl;
+	// cout << knapSackDIFF(weight, value, capacity, n, dp) << endl;
+
+	cout << knapSackPUREDP(weight, value, capacity, n) << endl;
 
 	return 0;
 }
