@@ -274,6 +274,221 @@ int helper(int si, vector<string> &strs, int m, int n, vector<vector<vector<int>
 	return result;
 }
 
+int minFallingPathSum(vector<vector<int>>& arr) {
+
+	int row = arr.size();
+	int col = arr.size();
+
+	vector<vector<int>> dp(row, vector<int> (col, -1));
+
+	int minValue = INT_MAX;
+	for (int start = 0; start < arr.size(); start++) {
+		int ans = helper(arr, 0, start, dp);
+		minValue = min(minValue, ans);
+	}
+
+	return minValue;
+}
+
+int helper(vector<vector<int>>& arr, int row, int col, vector<vector<int>> &dp) {
+	// BASE CASE
+	if (row == arr.size() - 1) {
+		return arr[row][col];
+	}
+
+	if (dp[row][col] != -1) {
+		return dp[row][col];
+	}
+
+	int minValue = INT_MAX;
+
+	int myValue = arr[row][col];
+
+	for (int i = 0; i < arr.size(); i++) {
+		if (i == col) {
+			continue;
+		}
+
+		int subProblemPathSum = helper(arr, row + 1, i, dp);
+		int myAnswer = subProblemPathSum + myValue;
+
+		minValue = min(minValue, myAnswer);
+	}
+
+	dp[row][col] = minValue;
+
+	return minValue;
+}
+
+int numRollsToTarget(int d, int f, int target) {
+
+	// target-> 0 - target
+	// dice -> 0 - d
+
+	return helper(d, target, f);
+}
+
+int helper(int d, int target, int f) {
+	// BASE CASE
+	if (d == 0 and target == 0) {
+		return 1;
+	}
+
+	if (d == 0 or target == 0) {
+		return 0;
+	}
+
+	int count = 0;
+
+	for (int i = 1; i <= f; i++) {
+		if (i > target) {
+			break;
+		}
+
+		int recursionResult = helper(d - 1, target - i, f); // subproblem
+		count = count + recursionResult;
+	}
+
+	return count;
+}
+
+int numRollsToTarget(int d, int f, int target) {
+
+	// target-> 0 - target
+	// dice -> 0 - d
+
+	return helper(d, target, f);
+}
+
+int helper(int d, int target, int f) {
+	// BASE CASE
+	if (d == 0 and target == 0) {
+		return 1;
+	}
+
+	if (d == 0 or target == 0) {
+		return 0;
+	}
+
+	int count = 0;
+
+	for (int i = 1; i <= f; i++) {
+		if (i > target) {
+			break;
+		}
+
+		int recursionResult = helper(d - 1, target - i, f); // subproblem
+		count = count + recursionResult;
+	}
+
+	return count;
+}
+
+int numberOfArrays(string s, int k) {
+
+	return helper(0, s, k);
+}
+
+int helper(int si, string s, int k) {
+	// BASE CASE
+	if (si == s.length()) {
+		return 1;
+	}
+
+	if (s[si] == '0') {
+		return 0;
+	}
+
+	int count = 0;
+
+	int val = 0;
+
+	for (int i = si; i < s.length(); i++) {
+
+		char ch = s[i]; // 3
+		int num = ch - '0';  // int 3
+
+		val = val * 10 + num; // 2*10 + 3 -> 23
+
+		if (val > k) {
+			break;
+		}
+
+		int recursionResult = helper(i + 1, s, k);
+		count = count + recursionResult;
+	}
+
+	return count;
+}
+
+int maxScore(vector<int>& cardPoints, int k) {
+	int n = cardPoints.size();
+
+	int row = n + 1;
+	int col = n + 1;
+	int zaxis = k + 1;
+
+	vector<vector<vector<int>>> dp(row, vector<vector<int>> (col, vector<int> (zaxis, -1)));
+
+	return helper(cardPoints, k, 0, n - 1, dp);
+}
+
+int helper(vector<int>& cardPoints, int k, int start, int end, vector<vector<vector<int>>> &dp) {
+	// BASE CASE
+	if (k == 0 or start > end) {
+		return 0;
+	}
+
+	if (dp[start][end][k] != -1) {
+		return dp[start][end][k];
+	}
+
+	int aage  = cardPoints[start] + helper(cardPoints, k - 1, start + 1, end, dp);
+	int pichhe = cardPoints[end] + helper(cardPoints, k - 1, start, end - 1, dp);
+
+	int result = max(aage, pichhe);
+
+	dp[start][end][k] = result;
+
+	return result;
+}
+
+int maxScore(vector<int>& cardPoints, int k) {
+	int n = cardPoints.size();
+
+	int sum = 0;
+	for (int card : cardPoints) {
+		sum += card;
+	}
+
+	int windowSum = 0;
+	for (int i = 0; i < n - k; i++) {
+		windowSum += cardPoints[i];
+	}
+
+	int left = 0;
+	int right = n - k;
+
+	int maxValue = 0;
+
+	while (right < n) {
+
+		int currSum = sum - windowSum;
+		maxValue = max(maxValue, currSum);
+
+		windowSum += cardPoints[right];
+		windowSum -= cardPoints[left];
+
+		left++;
+		right++;
+	}
+
+	int currSum = sum - windowSum;
+	maxValue = max(maxValue, currSum);
+
+	return maxValue;
+}
+
 int main() {
 
 
