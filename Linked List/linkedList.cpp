@@ -80,6 +80,7 @@ void insertAtAnyIndex(ListNode* &head, int data, int pos) {
 
 	if (pos >= size(head)) {
 		insertAtTail(head, data);
+		return;
 	}
 
 	ListNode* temp = head;
